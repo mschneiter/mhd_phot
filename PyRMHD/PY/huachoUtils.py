@@ -66,7 +66,7 @@ def coplot3d(cut,pos,neq,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout, \
    Returns a temperature cut
 '''
 def coplotTemp(cut,pos,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout, \
-             path='',kind='d',nghost=2,endian='<', cv=1.5, Tempsc=1.,base='points',neqE=4):
+             path='',kind='d',nghost=2,endian='<', cv=1.5, Tempsc=1.,base='points',neqdyn=5):
 
 
     nx=nxtot/mpiX
@@ -98,8 +98,8 @@ def coplotTemp(cut,pos,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout, \
                         offset=pos-ip*nx+nghost
                         data2d=data[::,offset,nghost:(ny+nghost),nghost:(nz+nghost)]
                                                 
-                        pgas= (data2d[neqE,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
-                        dentot=2.*data2d[0,::,::]-data2d[neqE+1,::,::]
+                        pgas= (data2d[4,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
+                        dentot=2.*data2d[0,::,::]-data2d[neqdyn,::,::]
                         temp=pgas/dentot
 
                         
@@ -114,8 +114,8 @@ def coplotTemp(cut,pos,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout, \
                         offset=pos-jp*ny+nghost
                         data2d=data[::,nghost:(nx+nghost),offset,nghost:(nz+nghost)]
 
-                        pgas= (data2d[neqE,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
-                        dentot=2.*data2d[0,::,::]-data2d[8,::,::]
+                        pgas= (data2d[4,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
+                        dentot=2.*data2d[0,::,::]-data2d[neqdyn,::,::]
                         temp=pgas/dentot
                         
                         map[ip*nx:(ip+1)*nx,kp*nz:(kp+1)*nz]=temp[::,::]*Tempsc
@@ -129,8 +129,8 @@ def coplotTemp(cut,pos,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout, \
                         offset=pos-kp*nz+nghost
                         data2d=data[::,nghost:(nx+nghost),nghost:(ny+nghost),offset]
 
-                        pgas= (data2d[neqE,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
-                        dentot=2.*data2d[0,::,::]-data2d[neqE+1,::,::]
+                        pgas= (data2d[4,::,::]-0.5*(np.square(data2d[1,::,::])+np.square(data2d[2,::,::])+np.square(data2d[3,::,::])) / data2d[0,::,::] )/cv
+                        dentot=2.*data2d[0,::,::]-data2d[neqdyn,::,::]
                         temp=pgas/dentot
                         
                         map[ip*nx:(ip+1)*nx,jp*ny:(jp+1)*ny]=temp[::,::]*Tempsc
