@@ -1,0 +1,42 @@
+ viscosity.f90            does not need changes
+ uprim.f90		  need changes
+ tstep.f90		  does not need changes
+ timestep.f90		  changed.
+ swaps.f90
+ step.f90
+ sources.f90
+ sound.f90		 needs changes: check the fast speed expresion and change
+				of status, from subroutine to module containing 
+				both, the csound and cfast (mag.. fast speed)
+ nbody.f90
+ limiter.f90
+ lapdiss.f90
+ jet.f90
+ initmain.f90		no changes needed
+ initflow.f90		changed
+ hllfluxes.f90
+ hllcfluxes.f90		REVISAR BIEN Y COMPARAR CON Li...
+ globals.f90		no changes needed
+ dmc_module.f90		
+ difradloc.f90
+ difrad_global.f90	no changes needed
+ difrad.f90		no changes needed
+ coolingh.f90
+ coolingdmc.f90
+ coolingchi.f90
+ coolingbbc.f90
+ coldens.f90
+ chi_module.f90
+ calcprim.f90		no changes needed
+ boundaryII.f90		no changes needed
+ boundaryI.f90		no changes needed
+ thermal_cond.f90
+ primu.f90
+ primf.f90
+ planet.f90
+ Out_Silo_Module.f90
+ output.f90		B has been dimensionalized among other changes
+ main.f90
+ lyman_alpha_tau.f90
+ star.f90
+ parameters.f90		ready (changes have)

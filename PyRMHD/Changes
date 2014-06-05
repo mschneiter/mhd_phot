@@ -1,0 +1,45 @@
+List of changes being made to the code
+(sorry por el english, me entrevero programming en modo castellano)
+
+4/8/14 -AE
+-Changed splity and splitz to swapy and swapz, both routines are
+ in a new file swaps.f90, and the makefile changed accordingly.
+-Renamed project.f90 file to lyman_alpha_tau.f90, changes included the
+ makefile as well, to compile Lyman Alpha Calculation use 
+ 'make lyman_alpha_tau'
+-Added the MHD fluxes in the uuk's for k=r in hhlcfluxes.f90
+-Updated huachoUtils.py to include neqE **kwarg to compute the
+ Temperature cut.
+ Its value is that of the equation number that corresponds to the internal
+ energy minus 1 (because python arrays start from 0).
+ Default value is 4, which should correspond to the hydro runs. 
+ For runs with the passive magnetic field it should be set to 8-1=7 example
+ T=coplotTemp(2,nytot/2,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path,cv=cv,Tempsc=tempsc,neqE=7)
+
+4/9/14 -AE
+-Changed all the MHD precompiler flags to PMHD (Passive MHD), to leave
+ room to use full MHD in the NEAR future
+
+4/10/14 -AE
+-Added HLL solver, changes in the makefile and to tstep.f90
+ to make room for it and a new file hllfluxes.f90 in the source
+-Turned off the source terms in the makefile, and the B passive 
+ field seems to work. We need to correct the sources.f90 routine or
+ return the enrergy/pressure equation to the 5th index and the
+ B field to 6,7 and 8
+
+
+
+(yo no me animo a escribir en english)
+4/11/14 -CV
+-Cambié la ubicación de las variables, ahora estan 
+  (rho,vx,vy,vz,pgas,bx,by,bz,neutros)
+
+30/04/2014 M y C
+- Agregamos los parámetros de escalamiento para el campo magnetico en parameters.f90 con la opción a la MHD pasiva
+(vsc= v termica para HD y vsc= v alfven para MHD Pasiva)
+
+21/05/2014
+- Changes in makefile, beginning of real MHD
+
+

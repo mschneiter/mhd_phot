@@ -1,0 +1,123 @@
+!====================================================================
+!   initial conditions
+!   for spherical blast wave
+!====================================================================
+subroutine initflow
+#include "common.h"
+  use parameters
+  real :: ekin,x,y,z, r1, r2, rx, ry, rz, vjet, xp, yp, zp
+  real :: omegat1, omegat2
+  real :: coso, sino, cosasino, cosacoso, sinasino, sinacoso
+  integer ::  i,j,k,unitin
+  character (len=128) file1
+  !
+  !--------------------------------------------------------------------
+  !
+  if (iwarm.eq.0) then
+     !
+     !*****************************************************************
+     call random_seed
+     !
+     omegat1=omega1*time
+     omegat2=omega2*time
+     !
+     coso=cos(omegat1)
+     sino=sin(omegat1)
+     cosasino=cosa*sino
+     cosacoso=cosa*coso
+     sinasino=sina*sino
+     sinacoso=sina*coso
+     !
+     do i=nxmin,nxmax
+        do j=nymin,nymax
+           do k=nzmin,nzmax
+              !
+              x=(float(i+coords(0)*nx-nxtot/2)+0.5)*dx
+              y=(float(j+coords(1)*ny-nytot/2)+0.5)*dy
+              z=(float(k+coords(2)*nz-nztot/2)+0.5)*dz
+              !
+              xp=x-xj
+              yp=y-yj
+              zp=z-zj
+              !
+              rx= xp*coso    -yp*sino
+              ry= xp*cosasino+yp*cosacoso -zp*sina
+              rz= xp*sinasino+yp*sinacoso +zp*cosa
+              !
+              r2=sqrt(rx**2+ry**2)
+              !
+              if ( (abs(rz).le.Lj).and.(r2.le.(rj)) ) then
+                 !   inside jet source
+                 vjet=sign(velj,rz)
+                 vx=vjet*sina*coso-velorb*sin(omegat2)
+                 vy=vjet*sina*sino+velorb*cos(omegat2)
+                 vz=vjet*cosa
+                 dens=rhoj
+                 !
+                 !   total density and momenta
+                 u(1,i,j,k)= dens
+                 u(2,i,j,k)= dens*vx
+                 u(3,i,j,k)= dens*vy
+                 u(4,i,j,k)= dens*vz
+                 !   energy
+                 ekin= 0.5*dens*velj**2.
+                 !u(5,i,j,k)=ekin+cv*2.*(dens/amol)*Tj*Rg/vsc2
+                 u(5,i,j,k)=ekin+cv*2.*dens*Tj/Psc
+                 !   density of neutrals
+                 u(6,i,j,k)= 0.0001*dens
+                 !   passive scalar
+                 u(7,i,j,k)= dens
+                 !
+              else
+                 !   environment
+                 dens=rhoenv
+                 !   total density and momenta
+                 u(1,i,j,k)= dens
+                 u(2,i,j,k)= 0.
+                 u(3,i,j,k)= 0.
+                 u(4,i,j,k)= 0.
+                 !   energy
+                 ekin= 0.
+                 !u(5,i,j,k)=ekin+cv*2.*(dens/amol)*Tw*Rg/vsc2
+                 u(5,i,j,k)=ekin+cv*2.*dens*Tenv/Psc
+                 !  density of neutrals
+                 u(6,i,j,k)= 0.0001*dens
+                 !   passive scalar
+                 u(7,i,j,k)= -dens
+                 !
+              endif
+           end do
+        end do
+     end do
+     !*****************************************************************
+  else
+     !
+     !   read from previous (.bin) output
+#ifdef MPIP
+     write(file1,'(a,i3.3,a,i3.3,a)')  &
+          trim(outputpath)//'BIN/points',rank,'.',itprint,'.bin'
+     unitin=rank+10
+#else
+     write(file1,'(a,i3.3,a)')         &
+          trim(outputpath)//'BIN/points',itprint,'.bin'
+     unitin=10
+#endif
+     open(unit=unitin,file=file1,status='unknown',form='unformatted', &
+          convert='BIG_ENDIAN')
+     !
+     read(unitin) u(:,:,:,:)
+     close(unitin)
+     !
+     print*,rank,'read',file1
+     itprint=itprint+1
+     !
+     !
+#ifdef MPIP
+     call mpi_barrier(mpi_comm_world,err)
+#endif
+     !
+  end if
+  !---------------------------------------------------------------------
+  return
+end subroutine initflow
+!=======================================================================
