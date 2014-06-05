@@ -11,11 +11,11 @@ module parameters
                                    ,  workdir='./'
   !
 #ifdef PMHD
-  integer, parameter :: neqdin=8        !# of eqs  (+scal)
+  integer, parameter :: neqdyn=8        !# of eqs  (+scal)
 #elif MHD
-  integer, parameter :: neqdin=8        !# of eqs  (+scal)
+  integer, parameter :: neqdyn=8        !# of eqs  (+scal)
 #else
-  integer, parameter :: neqdin=5        !# of eqs  (+scal)
+  integer, parameter :: neqdyn=5        !# of eqs  (+scal)
 #endif
   integer, parameter :: ndim=3          !dimensions
   integer, parameter :: npas=2          ! number of passive scalars 
@@ -84,7 +84,7 @@ module parameters
   !   some derived parameters (no need of user's input below this line)
   !--------------------------------------------------------------------
   !
-  integer, parameter :: neq=neqdin + npas
+  integer, parameter :: neq=neqdyn + npas
 !  integer, parameter :: neqpas= neq
 #ifdef MPIP
   integer, parameter :: nx=nxtot/mpicol, ny=nytot/mpirow, nz=nztot/mpirowz

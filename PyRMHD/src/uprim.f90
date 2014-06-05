@@ -17,7 +17,7 @@ subroutine uprim(prim,uu,T)
   prim(4)=uu(4)/r
   !
   prim(5)=( ( uu(5)-0.5*r*(prim(2)**2+prim(3)**2+prim(4)**2) ) /cv )
-  !if(prim(neqdin).lt.0.) write(*,*) 'ay !!!'
+  !if(prim(neqdyn).lt.0.) write(*,*) 'ay !!!'
   prim(5)=max(prim(5),1e-16)
   !
 #ifdef PMHD
@@ -35,7 +35,7 @@ subroutine uprim(prim,uu,T)
 
 !
 #ifdef PASSIVES
-  prim(neqdin+1:neq) = uu(neqdin+1:neq)
+  prim(neqdyn+1:neq) = uu(neqdyn+1:neq)
 #endif
   !
   !-----------------------------------------
@@ -47,7 +47,7 @@ subroutine uprim(prim,uu,T)
   !-----------------------------------------
 #ifdef COOLINGH
   !
-  dentot=(2.*r-prim(neqdin+1))
+  dentot=(2.*r-prim(neqdyn+1))
   dentot=max(dentot,1e-15)
   !
   T=max(1.,(prim(5)/dentot)*Tempsc)
@@ -77,8 +77,8 @@ subroutine uprim(prim,uu,T)
   !-----------------------------------------
 #ifdef COOLINGBBC
   !
-  dentot= prim(neqdin+1) + prim(neqdin+2) + prim(neqdin+3) + prim(neqdin+4) &
-       + prim(neqdin+5) + prim(neqdin+6)
+  dentot= prim(neqdyn+1) + prim(neqdyn+2) + prim(neqdyn+3) + prim(neqdyn+4) &
+       + prim(neqdyn+5) + prim(neqdyn+6)
   !
   T = (prim(5)/dentot/Rg)*vsc2
   !

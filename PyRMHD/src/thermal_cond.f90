@@ -111,7 +111,7 @@ contains
        do j=0,ny
           do k=0,nz
              !
-             yhp=1.-primit(neqdin+1,i,j,k)/primit(1,i,j,k)
+             yhp=1.-primit(neqdyn+1,i,j,k)/primit(1,i,j,k)
              !
              !  get the flux in the X direction
              if (Temp(i,j,k) == Temp(i+1,j,k) ) then

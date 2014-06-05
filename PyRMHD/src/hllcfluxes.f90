@@ -169,7 +169,7 @@ contains
       uuk(6:8)=rhost*priml(6:8)/priml(1)
 #endif
 #ifdef PASSIVES
-      uuk(neqdin+1:neq)=rhost*priml(neqdin+1:neq)/priml(1)
+      uuk(neqdyn+1:neq)=rhost*priml(neqdyn+1:neq)/priml(1)
 #endif
        !
        call primf(priml,ff)
@@ -193,7 +193,7 @@ contains
       uuk(6:8)=rhost*primr(6:8)/primr(1)
 #endif
 #ifdef PASSIVES
-      uuk(neqdin+1:neq)=rhost*primr(neqdin+1:neq)/primr(1)
+      uuk(neqdyn+1:neq)=rhost*primr(neqdyn+1:neq)/primr(1)
 #endif
        !
        call primf(primr,ff)

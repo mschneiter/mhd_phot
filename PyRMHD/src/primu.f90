@@ -19,7 +19,7 @@ subroutine primu(prim,uu)
   uu(8)=prim(8)
 #endif
 #ifdef PASSIVES
-  uu(neqdin+1:neq) = prim(neqdin+1:neq)
+  uu(neqdyn+1:neq) = prim(neqdyn+1:neq)
 #endif
 !
   return

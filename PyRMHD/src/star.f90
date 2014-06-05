@@ -135,9 +135,9 @@ contains
 #endif
 
                 !  density of neutrals
-                u(neqdin+1,i,j,k)= 0.*dens
+                u(neqdyn+1,i,j,k)= 0.*dens
                 !   passive scalar
-                u(neqdin+2,i,j,k)= dens
+                u(neqdyn+2,i,j,k)= dens
                 
                 ! IF INSIDE THE PLANET
              else if(radp <= rpw) then
@@ -161,9 +161,9 @@ contains
                 u(8,i,j,k) = 0.0
 #endif
                 !  density of neutrals
-                u(neqdin+1,i,j,k)=0.9999*dens
+                u(neqdyn+1,i,j,k)=0.9999*dens
                 !   passive scalar
-                u(neqdin+2,i,j,k)= -dens
+                u(neqdyn+2,i,j,k)= -dens
                 
              end if
                 

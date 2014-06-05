@@ -3,7 +3,7 @@
 !=======================================================================
 #ifdef SOURCE
 module sources
-  use parameters, only : neq, neqdin, nxtot, nytot, nztot, &
+  use parameters, only : neq, neqdyn, nxtot, nytot, nztot, &
                         Ggrav, rsc, rhosc, vsc2, nx, ny, nz
   use globals,    only : dx, dy, dz, coords
   implicit none

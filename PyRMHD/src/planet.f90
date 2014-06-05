@@ -70,9 +70,9 @@ contains
                 u(5,i,j,k)=0.5*dens*vsw**2 &
                      + cv*dens*1.9999*Tsw
                 !  density of neutrals
-                u(neqdin+1,i,j,k)= 0.0001*dens
+                u(neqdyn+1,i,j,k)= 0.0001*dens
                 !   passive scalar
-                u(neqdin+2,i,j,k)= dens
+                u(neqdyn+2,i,j,k)= dens
              endif             
           end do
        end do

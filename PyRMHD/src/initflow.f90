@@ -76,9 +76,9 @@ subroutine initflow(itprint)
                   + cv*dens*2.*Tsw
 
              !  density of neutrals (6) ahora (9)
-             u(neqdin+1,i,j,k)= 0.*dens
+             u(neqdyn+1,i,j,k)= 0.*dens
              !   passive scalar (7) ahora (10)
-             u(neqdin+2,i,j,k)= dens
+             u(neqdyn+2,i,j,k)= dens
              !   
            end do
         end do

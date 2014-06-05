@@ -213,7 +213,7 @@ subroutine atomic(dt,uu,tau,radphi)
   call uprim(prim,uu,T)             !# temperature
   col=colf(dble(t))                 !# collisional ionization rate 
   rec=alpha(dble(t))                !# rad. recombination rate
-  y0=dble( uu(neqdin+1)/uu(1) )     !# neutral H fraction  
+  y0=dble( uu(neqdyn+1)/uu(1) )     !# neutral H fraction  
   dh=dble( uu(1) )                  !# H density
 #ifdef RADDIFF
   fpn=dble(radphi)/dh               !# ionizing flux per nucleus
@@ -250,7 +250,7 @@ subroutine atomic(dt,uu,tau,radphi)
   !    and assuming that the cooling goes approximately linear with 
   !    temperature
   !    
-  dh0=dble( uu(neqdin+1) )
+  dh0=dble( uu(neqdyn+1) )
   al=ALOSS(y0,y1,dt,dh,dh0,dble(t))/dh**2
 
   !if(al.lt.0.) write(*,*) 'que paso !'
@@ -282,9 +282,9 @@ subroutine atomic(dt,uu,tau,radphi)
   t1=1.E4-9990.*y1
 #endif
     !   update the uu array
-  uu(neqdin+1)=sngl(y1)*uu(1)
+  uu(neqdyn+1)=sngl(y1)*uu(1)
   !
-  uu(5) = cv*(2.*uu(1)-uu(neqdin+1))*sngl(t1)/Tempsc        &
+  uu(5) = cv*(2.*uu(1)-uu(neqdyn+1))*sngl(t1)/Tempsc        &
        +0.5*prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2)    
   !
 end subroutine atomic

@@ -23,7 +23,7 @@ subroutine primf(prim,ff)
   ff(8)=prim(2)*prim(8)-prim(6)*prim(4)
 #endif
 #ifdef PASSIVES
-  ff(neqdin+1:neq) = prim(neqdin+1:neq)*prim(2)
+  ff(neqdyn+1:neq) = prim(neqdyn+1:neq)*prim(2)
 #endif
   return
 end subroutine primf

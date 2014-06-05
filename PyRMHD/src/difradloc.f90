@@ -75,7 +75,7 @@ contains
           do k=1,nz       
              call uprim(prim, u(:,i,j,k), T)
              !  electron density
-             de=max(u(1,i,j,k)-u(neqdin+1,i,j,k),0.)
+             de=max(u(1,i,j,k)-u(neqdyn+1,i,j,k),0.)
              !  Lyman cont. emission
              emLym= de*de*1.57e-13*(1.e4/T)**0.52
 
@@ -292,8 +292,8 @@ contains
          .and. (k <= nz).and.(k >= 1) &
          )
        !
-       dtau=primit(neqdin+1,i,j,k)*a0*dl*dx*rsc
-       ph(i,j,k)=ph(i,j,k)+f*(1.-exp(-dtau) )/primit(neqdin+1,i,j,k)
+       dtau=primit(neqdyn+1,i,j,k)*a0*dl*dx*rsc
+       ph(i,j,k)=ph(i,j,k)+f*(1.-exp(-dtau) )/primit(neqdyn+1,i,j,k)
        f=f*exp(-dtau)
        !
        xl=xl+dxl

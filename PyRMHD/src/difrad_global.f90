@@ -61,7 +61,7 @@
             do k=1,nz       
                call uprim(prim, u(:,i,j,k), T)
                !  electron density
-               de=max(u(1,i,j,k)-u(neqdin+1,i,j,k),0.)
+               de=max(u(1,i,j,k)-u(neqdyn+1,i,j,k),0.)
                !  Lyman cont. emission
                emLym= de*de*1.57e-13*(1.e4/T)**0.52
 
@@ -317,7 +317,7 @@
    !   retrieve the density
    aux( coords(0)*nx+1:(coords(0)*nx+nx), &
         coords(1)*ny+1:(coords(1)*ny+ny), &
-        coords(2)*nz+1:(coords(2)*nz+nz) ) = u (neqdin+1,1:nx,1:ny,1:nz)
+        coords(2)*nz+1:(coords(2)*nz+nz) ) = u (neqdyn+1,1:nx,1:ny,1:nz)
 
    call mpi_allreduce (aux, nh0, nxtot*nytot*nztot, &
         mpi_real_kind, mpi_sum, comm2d, err)

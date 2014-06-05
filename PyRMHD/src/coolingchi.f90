@@ -24,16 +24,16 @@ subroutine coolingchi(dt)
            !
            if(T.gt.Tmin) then
               !
-              Eth0=cv*primit(neqdin,i,j,k)
+              Eth0=cv*primit(neqdyn,i,j,k)
               !
               Aloss=coolchi(T)
               dens=primit(1,i,j,k)
               Ce=(Aloss*dble(dens)**2)/(Eth0*Psc)  ! cgs
               !
               !  apply cooling to primitive and conserved variables
-              primit(neqdin,i,j,k)=primit(neqdin,i,j,k)*exp(-ce*dt)
+              primit(neqdyn,i,j,k)=primit(neqdyn,i,j,k)*exp(-ce*dt)
               !
-              u(neqdin,i,j,k)=u(neqdin,i,j,k)-Eth0+cv*primit(neqdin,i,j,k)
+              u(neqdyn,i,j,k)=u(neqdyn,i,j,k)-Eth0+cv*primit(neqdyn,i,j,k)
               !
            end if
            !
