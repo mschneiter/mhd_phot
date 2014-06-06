@@ -29,17 +29,16 @@ subroutine cfast(p,d,bx,by,bz,cfx,cfy,cfz)
 !  use parameters
   implicit none
   real, intent(in) :: p, d, bx, by, bz
- real, intent(out) ::cfx,cfy,cfz
- real :: b2
+  real, intent(out) ::cfx,cfy,cfz
+  real :: b2
   !
- b2=bx*bx+by*by+bz*bz
-  cfx=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4*gamma*p*bx*bx/d**2))
-  cfy=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4*gamma*p*by*by/d**2))
-  cfz=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4*gamma*p*bz*bz/d**2))                
+  b2=bx*bx+by*by+bz*bz
+  cfx=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4.*gamma*p*bx*bx/d**2))
+  cfy=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4.*gamma*p*by*by/d**2))
+  cfz=sqrt(0.5*((gamma*p+b2)/d+sqrt((gamma*p+b2)/d)**2-4.*gamma*p*bz*bz/d**2))                
   !
-!  return
+  !  return
 end subroutine cfast
-
 
 end module sound
 !=======================================================================
