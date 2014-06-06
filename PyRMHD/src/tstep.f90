@@ -32,6 +32,10 @@ subroutine tstep(time,dt)
 #ifdef HLLC
   call hllcfluxes(1)
 #endif
+#ifdef HLLE
+  call hllEfluxes(1)
+#endif
+
   !   upwind timestep
   !   up=u^{n+1/2}=u_i^n-(dt/2dx)[f_i^n - f_{i-1}^n]
   call step(dtm)
@@ -56,6 +60,9 @@ subroutine tstep(time,dt)
 #endif
 #ifdef HLLC
   call hllcfluxes(2)
+#endif
+#ifdef HLLE
+  call hllEfluxes(2)
 #endif
   !   up=u^{n+1}=u_i^n-(dt/dx)[f_{i+1/2}^{n+1/2}-f_{i-1/2}^{n+1/2}]
    call step(dt)

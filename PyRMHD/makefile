@@ -22,8 +22,21 @@ FLAGS= -O3 -cpp
 MPIP = Y
 #   Double Precision (Y/N Default is single)
 DOUBLEP= Y
-#   Solver: HLL (too difussive), or HLLC
+#
+#   Enable Passive MHD 
+#   Includes induction eq with no back reaction to the flow)
+#   This is compatible with HD solvers (i.e. HLL, HLLC)   
+PMHD = N
+#
+#   Enable MHD (UNDER CONSTRUCTION)
+#   This is compatible with MHD solvers (HLLE, HLLD, under construction)
+MHD = Y
+#
+#   Solver: 
+#   HD  Solvers: HLL  (too difussive), or HLLC
+#   MHD Solvers: HLLE (too difussive), or HLLD (under construction)
 SOLVER = HLLC
+#
 #   Type of output
 OUTDAT = N
 OUTBIN = Y
@@ -38,7 +51,8 @@ OUTSILO= N
 #LINKFLAGS += -lsiloh5  -lhdf5_fortran -lsz -lz -lstdc++ 
 ##   additional equations (i.e. passive scalars)?
 PASSIVES = Y
-#   adiabatic or type of cooling (choose only one)
+#
+#   Adiabatic or type of cooling (choose only one)
 #   options are ADIABATIC, H, BBC, CORONAL
 #   ADIABATIC: of course turns off the cooling
 #   H: single parametrized cooling function (ionization fraction and T)
@@ -46,6 +60,7 @@ PASSIVES = Y
 #   DMC: Coronal eq. (tabulated) from Dalgarno & Mc Cray (1972)
 #   CHI: from table generated with Chianti
 COOLING = H
+#
 #   boundary conditions
 #  (choose only one per boundary + OTHERB if needed)
 #  optiins are OUTFLOW, CLOSED, PERIODIC
@@ -56,6 +71,7 @@ TOPY    = OUTFLOW
 INZ     = OUTFLOW
 OUTZ    = OUTFLOW
 OTHERB = Y
+#
 #   choice of slope limiter, available limiters are:
 #   limiter =-1: no average, 0 : no limiter, 1: Minmod,
 #   2: Van Leer, 3: Van Albada,4: UMIST, 5: Woodward
@@ -64,30 +80,26 @@ LIMITER =  1
 #
 #   Enable (isotropic) thermal conduction (Y/N)
 THERMAL_COND = N
+#
 #   Enable diffuse radiation (Y/N) 
 RADDIFF = Y
 #  This version does the transfer locally
 #  and passes the photons across mpi boundaries
 #
-#  Deprecated: global diffuse radiation, is kept 
-#  for testing purposes, all the cores receive a copy of
-#  of the entire domain, doe snot allow very high 
-#  resolution
+#  Global diffuse radiation, is kept for testing purposes,
+#  all the cores receive a copy of of the entire domain, does 
+#  not allow very high resolution (deprecated)
 RADDIFF_GLOBAL= N
+#
 # include source terms (Y/N)
 SOURCE = Y
+#
 #   Include gravity (Y/N) (from point sources)
 GRAV = N
+#
 #   Include radiative pressure (y/N)
 RADPRES = N
-#   Enable Passive MHD 
-#   (includes induction eq with no back reaction 
-#	to the flow)
-PMHD = N
 #
-#   Enable MHD (UNDER CONSTRUCTION) 
-#   
-MHD = Y
 #   Enable the N-Body module (Y/N) not implemented yet!
 #   NBODY = N
 #
@@ -118,6 +130,7 @@ OBJECTS = \
 ./src/tstep.o	\
 ./src/hllfluxes.o 	\
 ./src/hllcfluxes.o 	\
+./src/hllefluxes.o 	\
 ./src/boundaryI.o	\
 ./src/boundaryII.o	\
 ./src/step.o 	\
@@ -154,6 +167,12 @@ FLAGS += -DHLL
 endif
 ifeq ($(SOLVER),HLLC)
 FLAGS += -DHLLC
+endif
+ifeq ($(SOLVER),HLLE)
+FLAGS += -DHLLE
+endif
+ifeq ($(SOLVER),HLLD)
+FLAGS += -DHLLD
 endif
 ifeq ($(OUTDAT),Y)
 FLAGS += -DOUTDAT
