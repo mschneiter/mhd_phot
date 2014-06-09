@@ -127,9 +127,9 @@ contains
   real :: b2, cs2va2
   !
   b2=prim(6)**2+prim(7)**2+prim(8)**2
-  ca2va2 = (gamma*prim(5)-b2)/prim(1)   ! cs^2 + ca^2
+  cs2va2 = (gamma*prim(5)-b2)/prim(1)   ! cs^2 + ca^2
 
-  cfx=sqrt(0.5*(ca2va2+sqrt(ca2va2-4.*prim(5)*prim(6)**2/prim(1)/prim(1) ) ) )
+  cfx=sqrt(0.5*(cs2va2+sqrt(cs2va2-4.*prim(5)*prim(6)**2/prim(1)/prim(1) ) ) )
 
   !  return
 end subroutine cfastX
