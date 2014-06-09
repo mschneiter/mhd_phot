@@ -71,7 +71,8 @@ subroutine initflow(itprint)
 !!$             u(6,i,j,k) =  3.*y*x*cpi
 !!$             u(7,i,j,k) = (3.*y**2-rads**2)*cpi
 !!$             u(8,i,j,k) =  3.*y*z*cpi
-!!$#elif MHD
+!!$#endif
+!!$#ifdef MHD
 !!$             u(6,i,j,k) =  3.*y*x*cpi
 !!$             u(7,i,j,k) = (3.*y**2-rads**2)*cpi
 !!$             u(8,i,j,k) =  3.*y*z*cpi
