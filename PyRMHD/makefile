@@ -70,7 +70,7 @@ BOTTOMY = OUTFLOW
 TOPY    = OUTFLOW
 INZ     = OUTFLOW
 OUTZ    = OUTFLOW
-OTHERB = Y
+OTHERB = N
 #
 #   choice of slope limiter, available limiters are:
 #   limiter =-1: no average, 0 : no limiter, 1: Minmod,
@@ -115,6 +115,7 @@ OBJECTS = \
 ./src/chi_module.o	\
 ./src/difrad.o \
 ./src/difrad_global.o \
+./src/brio_wu.o
 ./src/star.o \
 ./src/sources.o \
 ./src/thermal_cond.o \

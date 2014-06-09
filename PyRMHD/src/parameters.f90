@@ -21,13 +21,13 @@ module parameters
   integer, parameter :: npas=2          ! number of passive scalars 
   integer, parameter :: nghost=2        ! number of ghost cells
   !   mesh size
-  integer, parameter :: nxtot=256
-  integer, parameter :: nytot=64
-  integer, parameter :: nztot=256
+  integer, parameter :: nxtot=800
+  integer, parameter :: nytot=8
+  integer, parameter :: nztot=8
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=1, mpirow=1,mpirowz=1
+  integer, parameter :: mpicol=8, mpirow=1,mpirowz=1
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
@@ -47,9 +47,9 @@ module parameters
   real, parameter :: yr=3.1536E7, day=86400., hr=3600. !yr, day and hour in sec.
   !
   !   box size in code units
-  real, parameter :: xmax=1., ymax=0.25, zmax=1.
+  real, parameter :: xmax=1., ymax=0.01, zmax=0.01
   !   box size, corresponds to xmax
-  real, parameter :: xphys=0.3*Au
+  real, parameter :: xphys=1.
   !
   !---------------------------------------------------------------------
   !
@@ -72,8 +72,8 @@ module parameters
   real, parameter :: nenv=44., Tenv=10., venv=0.0
   !--------------------------------------------------------------------
   !   maximum time of integration and output interval
-  real, parameter :: tmax    =0.7*day/tsc
-  real, parameter :: dtprint =0.1*day/tsc
+  real, parameter :: tmax    =0.15 !*day/tsc
+  real, parameter :: dtprint =0.02 !*day/tsc
   real, parameter :: cfl=0.5                    ! Courant number
   real, parameter :: eta=0.005                  ! viscosity
   !
