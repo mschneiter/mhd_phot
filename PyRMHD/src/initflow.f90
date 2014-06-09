@@ -38,7 +38,7 @@ subroutine initflow(itprint)
   !--------------------------------------------------------------------
   !
   if (iwarm.eq.0) then
-    !
+
     call init_bw()
     call impose_bw(u,0.)
 !!$     do i=nxmin,nxmax
