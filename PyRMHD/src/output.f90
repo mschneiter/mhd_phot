@@ -275,7 +275,8 @@ subroutine output(itprint)
      end do
      !write(unitout) lf  
      !
-#elif MHD
+#endif
+#ifdef MHD
   !   MAGNETIC FIELD
   write(unitout,'(a)') 'VECTORS BField double'
   !write(unitout) trim(cbuffer),lf

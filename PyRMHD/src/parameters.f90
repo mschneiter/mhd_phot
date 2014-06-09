@@ -63,7 +63,8 @@ module parameters
   real, parameter :: tsc =rsc/sqrt(vsc2) 
 #ifdef PMHD
    real, parameter :: bsc = sqrt(4.0*pi*Psc)     
-#elif MHD
+#endif
+#ifdef MHD
    real, parameter :: bsc = sqrt(4.0*pi*Psc)     
 #endif
   !----------------------------------------------------
