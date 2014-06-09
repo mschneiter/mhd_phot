@@ -115,7 +115,7 @@ OBJECTS = \
 ./src/chi_module.o	\
 ./src/difrad.o \
 ./src/difrad_global.o \
-./src/brio_wu.o  \
+./src/brio_wu.o \
 ./src/star.o \
 ./src/sources.o \
 ./src/thermal_cond.o \
