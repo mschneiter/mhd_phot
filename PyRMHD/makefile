@@ -2,7 +2,7 @@
 #   for Huacho 3D
 #---------------------------------------------------
 #   Name of the executable
-PROGRAM=PMHD_huacho
+PROGRAM=MHD_huacho
 #
 #   Choice of compiler and flags  ! if mpi mpif90 will be 
 #   used but this is required to adjust some compilation flags

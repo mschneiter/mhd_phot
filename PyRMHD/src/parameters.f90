@@ -12,7 +12,7 @@ module parameters
   !
 #ifdef PMHD
   integer, parameter :: neqdyn=8        !# of eqs  (+scal)
-#elif MHD
+#elseif MHD
   integer, parameter :: neqdyn=8        !# of eqs  (+scal)
 #else
   integer, parameter :: neqdyn=5        !# of eqs  (+scal)
@@ -27,7 +27,7 @@ module parameters
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=8, mpirow=1,mpirowz=1
+  integer, parameter :: mpicol=1, mpirow=1,mpirowz=1
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
