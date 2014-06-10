@@ -1,0 +1,56 @@
+#!/bin/bash
+### Name of run and output files
+#PBS -N HUACHO
+#PBS -e HUACHO.err
+#PBS -o HUACHO.out
+
+#PBS -m ae
+###PBS -M esquivel@nucleares.unam.mx
+
+### Queue name and number of nodes:processors per node
+#PBS -q default
+#PBS -r n
+#PBS -l nodes=4:old:ppn=8
+
+### Set environment variables for mpi.
+export PATH=/usr/mpi/intel/mvapich2-1.8/bin:/usr/local/bin:${PATH}
+export MPD_BIN=/usr/local/bin:
+export LD_LIBRARY_PATH+=:/usr/local/szip/lib:/usr/local/hdf5/lib:/usr/local/silo/lib:
+### Set the execution directory. This directory MUST exist on each node.
+WORKDIR="/home/esquivel/HUACHO-SRC/"
+### EXEPATH is the directory where your executable resides
+EXEPATH="/home/esquivel/HUACHO-SRC/"
+### EXE is the name of your executable (compiled mpi program) 
+EXE="huacho"
+### ARGS is optional. If you don't need it simply leave it empty
+ARGS=""
+### ARGS is also optional.
+INFILE=""
+
+### ---------------------------------------
+### BEGINNING OF EXECUTION
+### ---------------------------------------
+export NPROCS=`wc -l $PBS_NODEFILE |gawk '//{print $1}'`
+export TMP_MACHINES="$WORKDIR/tmp-machines-file.out"
+cat $PBS_NODEFILE | uniq > $TMP_MACHINES
+NP_MPD=`wc -l $TMP_MACHINES |gawk '//{print $1}'`
+echo The master node of this job is `hostname`
+echo The working directory is `echo $PBS_O_WORKDIR`
+echo The node file is $PBS_NODEFILE
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+echo This job runs on the following nodes:
+echo `cat $PBS_NODEFILE`
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+echo This job has allocated $NPROCS nodes
+echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+echo
+### end of information preample
+
+### Ready... Simply discard $ARGS and $INFILE if you don't need them
+echo  mpdboot -n $NP_MPD -v --file=$TMP_MACHINES
+echo  mpiexec -n $NPROCS $EXEPATH$EXE $ARGS $INFILE
+cd $WORKDIR
+mpdboot -n $NP_MPD -v --file=$TMP_MACHINES
+mpiexec -np $NPROCS $EXEPATH$EXE $ARGS $INFILE
+mpdallexit
+rm -f $TMP_MACHINES
