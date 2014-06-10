@@ -82,7 +82,7 @@ LIMITER =  1
 THERMAL_COND = N
 #
 #   Enable diffuse radiation (Y/N) 
-RADDIFF = Y
+RADDIFF = N
 #  This version does the transfer locally
 #  and passes the photons across mpi boundaries
 #

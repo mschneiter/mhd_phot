@@ -25,7 +25,7 @@ module parameters
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=1, mpirow=1,mpirowz=1
+  integer, parameter :: mpicol=8, mpirow=1,mpirowz=1
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
