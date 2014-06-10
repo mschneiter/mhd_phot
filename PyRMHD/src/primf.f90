@@ -13,7 +13,6 @@ subroutine primf(prim,ff)
 # ifndef MHD
 
   ! HD or PMHD
-  vsq = 
   etot= 0.5*prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2)+cv*prim(5)
   !
   ff(1) = prim(1)*prim(2)
@@ -38,7 +37,7 @@ subroutine primf(prim,ff)
 
 #endif
   !
-#if define(PMHD) || defined
+#if defined(PMHD) || defined(MHD)
   ff(6)=0.0
   ff(7)=prim(2)*prim(7)-prim(6)*prim(3)
   ff(8)=prim(2)*prim(8)-prim(6)*prim(4)

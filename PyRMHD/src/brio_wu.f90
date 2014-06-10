@@ -4,18 +4,13 @@
 module BrioWu
   use parameters
   implicit none
-  real  :: RSW, TSW, VSW, dsw, b0 ! star: Radius, Temperature, Velocity, Density, Magnetic Field
-  real  :: RPW, TPW, VPW, dpw ! planet: Radius, Temperature, Velocity, Density
-  real  :: torb, rorb ! planet: orbital period & distance
-  real  :: MassS, MassP
-  real  :: xp, yp, zp  ! position of the planet (respect to the star)
+  real :: rhoL, rhoR, vxL, vxR, vyL, vyR, vzL, vzR, pL, pR
+  real :: BxL, BxR, ByL, ByR, BzL, BzR
 contains
 
   subroutine init_bw()
     implicit none
-    real :: rhoL, rhoR, vxL, vxR, vyL, vyR, vzL, vzR, pL, pR
-    real :: BxL, BxR, ByL, ByR, BzL, BzR
-
+    
     rhoL = 1.
     rhoR = 0.125
     vxL  = 0.

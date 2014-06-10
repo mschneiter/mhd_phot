@@ -5,9 +5,8 @@
 subroutine initflow(itprint)
   use parameters
   use globals
-#ifdef OTHERB
-   use user_mod
-#endif
+  use user_mod
+
 
   implicit none
   integer , intent(inout) :: itprint
@@ -36,62 +35,8 @@ subroutine initflow(itprint)
   !
   if (iwarm.eq.0) then
     !
-    call init_bw()
-    call impose_bw(u,0.)
-!!$     do i=nxmin,nxmax
-!!$        do j=nymin,nymax
-!!$           do k=nzmin,nzmax
-!!$             ! Position measured from the centre of the grid (star)              
-!!$             x=(float(i+coords(0)*nx-nxtot/2)+0.5)*dx
-!!$             y=(float(j+coords(1)*ny-nytot/2)+0.5)*dy
-!!$             z=(float(k+coords(2)*nz-nztot/2)+0.5)*dz
-!!$
-!!$             ! Distance from the center of the box
-!!$             rads=sqrt(x**2+y**2+z**2)
-!!$             if(rads == 0.) rads=dx*0.01
-!!$
-!!$             !  This is the solution of the wind of the star
-!!$             !  filling the whole domain
-!!$             cpi=b0*(rsw/(rads+1.e-30))**3/(2.*(rads+1.e-30)**2)
-!!$             
-!!$             VelX=VSW*X/RADS
-!!$             VelY=VSW*Y/RADS
-!!$             VelZ=VSW*Z/RADS
-!!$             DENS=DSW*RSW**2/RADS**2
-!!$             !   total density and momenta
-!!$             u(1,i,j,k) = dens
-!!$             u(2,i,j,k) = dens*velx
-!!$             u(3,i,j,k) = dens*vely
-!!$             u(4,i,j,k) = dens*velz
-!!$             ! B FIELD
-!!$#ifdef PMHD
-!!$             u(6,i,j,k) =  3.*y*x*cpi
-!!$             u(7,i,j,k) = (3.*y**2-rads**2)*cpi
-!!$             u(8,i,j,k) =  3.*y*z*cpi
-!!$#endif
-!!$#ifdef MHD
-!!$             u(6,i,j,k) =  3.*y*x*cpi
-!!$             u(7,i,j,k) = (3.*y**2-rads**2)*cpi
-!!$             u(8,i,j,k) =  3.*y*z*cpi
-!!$#endif 
-!!$             !   energy (5)
-!!$             u(5,i,j,k)=0.5*dens*vsw**2 &
-!!$                  + cv*dens*2.*Tsw
-!!$
-!!$             !  density of neutrals (6) ahora (9)
-!!$             u(neqdyn+1,i,j,k)= 0.*dens
-!!$             !   passive scalar (7) ahora (10)
-!!$             u(neqdyn+2,i,j,k)= dens
-!!$             !   
-!!$           end do
-!!$        end do
-!!$     end do
-!!$     !
-!!$     !---------------------------------------------------------------------
-!!$
-     !
-     !
-     !*****************************************************************
+    call initial_conditions(u,0.)
+    ! 
   else
      !
      !   read from previous (.bin) output

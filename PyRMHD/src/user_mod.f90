@@ -39,9 +39,10 @@ contains
   !   just don't use it...
   !--------------------------------------------------------------------
   subroutine initial_conditions(u,time)
+    implicit none
     real, intent(out) :: u(neq,nxmin:nxmax,nymin:nymax,nzmin:nzmax)
     real, intent(in) :: time
-    implicit none
+
     
     !   Fills the domain w/the setup of the Brio-Wu shock
     call impose_bw(u)
@@ -54,6 +55,7 @@ contains
   !--------------------------------------------------------------------
   !   User Defined Boundary conditions 
   !--------------------------------------------------------------------
+#ifdef OTHERB
   subroutine impose_user_bc(u,time)
    use globals, only : coords, dx, dy, dz, rank
    implicit none
@@ -66,6 +68,7 @@ contains
    !call impose_star(u,time)
    
   end subroutine impose_user_bc
+#endif
   !--------------------------------------------------------------------
 
 end module user_mod
