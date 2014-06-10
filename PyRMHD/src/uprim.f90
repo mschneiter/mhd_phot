@@ -16,21 +16,20 @@ subroutine uprim(prim,uu,T)
   prim(3)=uu(3)/r
   prim(4)=uu(4)/r
   !
+#ifndef MHD
+  ! if MHD (active) not defined
   prim(5)=( ( uu(5)-0.5*r*(prim(2)**2+prim(3)**2+prim(4)**2) ) /cv )
+#else
+  !  if MHD defined the magnetic energy is included
+prim(5)=( uu(5)-0.5* ( r*(prim(2)**2+prim(3)**2+prim(4)**2) 
+                        +(prim(6)**2+prim(7)**2+prim(8)**2) ) )/cv  
+#endif
   !if(prim(neqdyn).lt.0.) write(*,*) 'ay !!!'
   prim(5)=max(prim(5),1e-16)
   !
-!IF PASSIVE MHD OPTION CHOSEN
-#ifdef PMHD
-  prim(6) = uu(6)
-  prim(7) = uu(7)
-  prim(8) = uu(8)            
-#endif 
-!If MHD OPTION CHOSEN
-#ifdef MHD
-  prim(6) = uu(6)
-  prim(7) = uu(7)
-  prim(8) = uu(8)            
+!IF PASSIVE MHD OR MHD CHOSEN
+#if defined(PMHD) || defined(MHD) 
+  prim(6:8) = uu(6:8)
 #endif 
 !
 ! IF EMPLOYING PASSIVE SCALARS
