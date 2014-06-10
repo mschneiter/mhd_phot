@@ -6,11 +6,8 @@ subroutine initflow(itprint)
   use parameters
   use globals
 #ifdef OTHERB
-   use star
-  ! use jet
+   use user_mod
 #endif
-   ! Brio Wu test
-   use BrioWu
 
   implicit none
   integer , intent(inout) :: itprint

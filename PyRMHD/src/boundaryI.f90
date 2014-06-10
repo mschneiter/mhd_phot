@@ -1,4 +1,4 @@
-!======================================================================
+======================================================================
 !   boundary conditions on u with only one ghost cell
 !======================================================================
 subroutine boundaryI(time,dt)
@@ -219,10 +219,8 @@ subroutine boundaryI(time,dt)
      !   other type of boundaries
 #ifdef OTHERB
      !
-     !   impose jet (parameters in jet.f90)
-     !     call impose_jet(u,time)
-     ! imposte star/planet system (parameters in star.f90)
-    call impose_star(u,time)
+     ! imposte star/planet system (parameters in user_mod.f90)
+    call impose_user_bc(u,time)
     !
     !--------------------------------------------------------------------------------
     !

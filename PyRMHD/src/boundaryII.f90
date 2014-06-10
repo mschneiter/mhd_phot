@@ -255,10 +255,8 @@ subroutine boundaryII(time,dt)
      !   other type of bounadries  <e.g. winds jets outflows>
 #ifdef OTHERB
      !
-     !   impose jet (parameters in jet.f90)
-     !     call impose_jet(up,time)
-     !   impose star/planet system (parameteres in star.f90)
-     call impose_star(up,time)
+     !   impose star/planet system (parameteres in user_mod.f90)
+     call impose_user_bc(up,time)
      !
      !--------------------------------------------------------------------------------
 #endif

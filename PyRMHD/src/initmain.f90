@@ -19,10 +19,7 @@ subroutine initmain(time, tprint, itprint)
 #ifdef THERMAL_COND
   use thermal_cond
 #endif
-#ifdef  OTHERB
-!  use jet
-  use star
-#endif
+  use user_mod
 
   implicit none
   real,    intent(out) :: time, tprint
@@ -193,11 +190,9 @@ subroutine initmain(time, tprint, itprint)
 #ifdef RADDIFF_GLOBAL
   call init_rand()
 #endif
-#ifdef OTHERB
-  !  initialize special boundaries enabled 
-  !  call init_jet()
-  call init_star()
-#endif
+  !  User input initialization, it is called always, 
+  !  it has to be there, even empty
+  call init_user_mod()
   !
   !--------------------------------------------------------------------
   !   write report of compilation parameters

@@ -119,6 +119,7 @@ OBJECTS = \
 ./src/star.o \
 ./src/sources.o \
 ./src/thermal_cond.o \
+./src/user_mod.o  \
 ./src/main.o		\
 ./src/initmain.o	\
 ./src/initflow.o 	\
