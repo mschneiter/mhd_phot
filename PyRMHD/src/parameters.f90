@@ -10,9 +10,7 @@ module parameters
  character (len=128),parameter ::  outputpath='./' &
                                    ,  workdir='./'
   !
-#ifdef PMHD
-  integer, parameter :: neqdyn=8        !# of eqs  (+scal)
-#elseif MHD
+#if defined(MHD) || defined(PMHD)
   integer, parameter :: neqdyn=8        !# of eqs  (+scal)
 #else
   integer, parameter :: neqdyn=5        !# of eqs  (+scal)
