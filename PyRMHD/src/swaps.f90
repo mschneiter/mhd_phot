@@ -11,7 +11,7 @@ subroutine swapy(prim,neq)
   prim(2)=prim(3)
   prim(3)=aux
   !
-#ifdef PMHD
+#if defined(PMHD) || defined(MHD)
   aux=prim(6)
   prim(6)=prim(7)
   prim(7)=aux
@@ -34,7 +34,7 @@ subroutine swapz(prim,neq)
   prim(2)=prim(4)
   prim(4)=aux
   !
-#ifdef PMHD
+#if defined(PMHD) || defined(MHD)
   aux=prim(6)
   prim(6)=prim(8)
   prim(8)=aux
