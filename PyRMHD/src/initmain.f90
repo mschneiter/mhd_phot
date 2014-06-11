@@ -196,10 +196,22 @@ subroutine initmain(time, tprint, itprint)
   !
   !--------------------------------------------------------------------
   !   write report of compilation parameters
+  !   print resolution and number of eqs
 #ifdef MPIP
   call mpi_barrier(mpi_comm_world, err)
   if(rank.eq.master) then
-     print'(a)',''
+    print'(a)',''
+#endif
+    print'(a,i0,a)', 'Running with ',neq,' total equations' 
+    print'(a,i0,a,i0,a,i0)','Resolution is (nx, ny, nz) ', nx,' ',ny,' ',nz
+    print'(a)',''
+#ifdef MHD
+     print'(a)', 'Full MHD enabled'
+     print'(a)', ''
+#endif
+#ifdef PMHD
+     print'(a)', 'Passive MHD enabled'
+     print'(a)', ''
 #endif
 #ifdef DOUBLEP
      print'(a)', 'Double precision used (reals are 8 bytes long)'
@@ -220,6 +232,15 @@ subroutine initmain(time, tprint, itprint)
      print'(a)', 'The Riemann solver is HLL-HLLC (hybrid)'
      print'(a)', ''
 #endif
+#ifdef HLLE
+     print'(a)', 'The Riemann solver is HLLE)'
+     print'(a)', ''
+#endif
+#ifdef HLLD
+     print'(a)', 'The Riemann solver is HLLD'
+     print'(a)', ''
+#endif
+
 #ifdef ADIABATIC
      print'(a)', 'The code is in ADIABATIC mode'
      print'(a)', ''
