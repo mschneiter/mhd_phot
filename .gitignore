@@ -8,3 +8,5 @@
 *.pyc
 *.err
 *.out
+
+PyRMHD/MHD_huacho

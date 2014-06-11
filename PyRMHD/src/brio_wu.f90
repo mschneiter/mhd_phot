@@ -11,14 +11,14 @@ contains
   subroutine init_bw()
     implicit none
     
-    rhoL = 1.  ; rhoR =  0.125
-    vxL  = 0.  ; vxR  =  0.
-    vyL  = 0.  ; vyR  =  0.
-    vzL  = 0.  ; vzR  =  0.
-    pL   = 1.  ; pR   =  0.1
-    BxL  = 1.  ; BxR  =  1.
-    ByL  = 1.  ; ByR  = -1.
-    BzL  = 0.  ; BzR  =  0.
+    rhoL = 1.   ; rhoR =  0.125
+    vxL  = 0.   ; vxR  =  0.
+    vyL  = 0.   ; vyR  =  0.
+    vzL  = 0.   ; vzR  =  0.
+    pL   = 1.   ; pR   =  0.1
+    BxL  = 0.75 ; BxR  =  0.75
+    ByL  = 1.   ; ByR  = -1.
+    BzL  = 0.   ; BzR  =  0.
 
   end subroutine init_bw
 
