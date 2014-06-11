@@ -19,7 +19,7 @@ module parameters
   integer, parameter :: npas=2          ! number of passive scalars 
   integer, parameter :: nghost=2        ! number of ghost cells
   !   mesh size
-  integer, parameter :: nxtot=800
+  integer, parameter :: nxtot=400
   integer, parameter :: nytot=8
   integer, parameter :: nztot=8
   !
@@ -35,7 +35,7 @@ module parameters
   !   some physical constants (and pi)
   real, parameter :: amh=1.66e-24,mu=1.3,Kb=1.38e-16
   real, parameter :: Hmm=1.007,Rg=8.3145e7, Ggrav=6.67259e-8
-  real, parameter :: cv=100., gamma=(cv+1.)/cv
+  real, parameter :: cv=1., gamma=(cv+1.)/cv
   real, parameter :: pi=3.1415926535
   real, parameter :: Msun=1.99E33, Rsun=6.955e10
   real, parameter :: Mjup=1.898E30
