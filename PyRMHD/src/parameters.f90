@@ -16,7 +16,7 @@ module parameters
   integer, parameter :: neqdyn=5        !# of eqs  (+scal)
 #endif
   integer, parameter :: ndim=3          !dimensions
-  integer, parameter :: npas=2          ! number of passive scalars 
+  integer, parameter :: npas=0          ! number of passive scalars 
   integer, parameter :: nghost=2        ! number of ghost cells
   !   mesh size
   integer, parameter :: nxtot=400
@@ -74,7 +74,7 @@ module parameters
   real, parameter :: tmax    =0.15 !*day/tsc
   real, parameter :: dtprint =0.02 !*day/tsc
   real, parameter :: cfl=0.5                    ! Courant number
-  real, parameter :: eta=0.005                  ! viscosity
+  real, parameter :: eta=0.001                  ! viscosity
   !
   !   for an iwarm (0->from t=0,1->starts from t=itprint*dtprint
   integer, parameter :: iwarm=0

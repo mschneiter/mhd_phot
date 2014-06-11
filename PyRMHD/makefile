@@ -19,7 +19,7 @@ FLAGS= -O3 -cpp
 #---------------------------------------------------
 #   compilation time parameters (Y=on, N=off)
 #   carefull all of the following is case sensitive
-#---------------------------------------------------
+#--------------------------------------`-------------
 #   MPI paralalelization
 MPIP = Y
 #   Double Precision (Y/N Default is single)
@@ -52,7 +52,7 @@ OUTSILO= N
 #LINKFLAGS = -L/usr/local/szip/lib -L/usr/local/hdf5/lib/ -L/usr/local/silo/lib/
 #LINKFLAGS += -lsiloh5  -lhdf5_fortran -lsz -lz -lstdc++ 
 ##   additional equations (i.e. passive scalars)?
-PASSIVES = Y
+PASSIVES = N
 #
 #   Adiabatic or type of cooling (choose only one)
 #   options are ADIABATIC, H, BBC, CORONAL

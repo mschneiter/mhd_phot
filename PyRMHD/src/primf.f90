@@ -3,7 +3,7 @@
 !   one point
 !=======================================================================
 subroutine primf(prim,ff)
-  use parameters
+  use parameters, only : neq, neqdyn, cv
   implicit none
   real,    dimension(neq), intent(in)  :: prim
   real,    dimension(neq), intent(out) :: ff
@@ -12,17 +12,16 @@ subroutine primf(prim,ff)
   !  If MHD (active) not defined
 #ifdef MHD
   ! MHD
-  etot= 0.5*(prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2) &
-           + prim(6)**2+prim(7)**2+prim(8)**2)          &
-           +cv*prim(5)
+  etot= 0.5*( prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2)    &
+                     + prim(6)**2+prim(7)**2+prim(8)**2  )  &
+                     + cv*prim(5)
   !
   ff(1) = prim(1)*prim(2)
-  ff(2) = prim(1)*prim(2)**2     +prim(5)+0.5*(-prim(6)**2+prim(7)**2+prim(8) )
+  ff(2) = prim(1)*prim(2)*prim(2)+prim(5)+0.5*(prim(7)**2+prim(8)**2-prim(6)**2)
   ff(3) = prim(1)*prim(2)*prim(3)-prim(6)*prim(7)
   ff(4) = prim(1)*prim(2)*prim(4)-prim(6)*prim(8)
-  ff(5) = prim(2)*(etot+prim(5)+0.5*(prim(6)**2+prim(7)**2+prim(8)) )- &
-          prim(6)*(prim(2)*prim(6)+prim(3)*prim(7)+prim(4)*prim(8) )
-
+  ff(5) = prim(2)*(etot+prim(5)+0.5*(prim(6)**2+prim(7)**2+prim(8)**2) ) &
+         -prim(6)*(prim(2)*prim(6)+prim(3)*prim(7)+prim(4)*prim(8))
 #else
   ! HD or PMHD
   etot= 0.5*prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2)+cv*prim(5)

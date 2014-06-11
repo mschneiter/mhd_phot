@@ -49,7 +49,7 @@ contains
                 u(4,i,j,k) = rhoL*vzL
                 !   total energy
                 u(5,i,j,k)=0.5*rhoL*(vxL**2+vyL**2+vzL**2)+cv*pL  &
-                          +0.5*(BxL**2+ByL**2+BzL**2)
+                               +0.5*(BxL**2+ByL**2+BzL**2)
                 u(6,i,j,k) =  BxL
                 u(7,i,j,k) =  ByL
                 u(8,i,j,k) =  BZL
@@ -62,10 +62,10 @@ contains
                 u(4,i,j,k) = rhoR*vzR
                 !   energy
                 u(5,i,j,k)=0.5*rhoR*(vxR**2+vyR**2+vzR**2)+cv*pR   &
-                          +0.5*(BxR**2+ByR**2+BzR**2)
+                               +0.5*(BxR**2+ByR**2+BzR**2)
                 u(6,i,j,k) =  BxR
                 u(7,i,j,k) =  ByR
-                u(8,i,j,k) =  BZR
+                u(8,i,j,k) =  BzR
 
              end if
                 

@@ -28,10 +28,10 @@ nztot=8
 mpiX=8
 mpiY=1
 mpiZ=1
-neqs=10
+neqs=8
 
 
-cv=100.
+cv=1.
 gam=(cv+1.)/cv
 vsc=1.
 psc=1.
@@ -52,47 +52,54 @@ for nout in range(4,5):
         vx=   coplot3d(2,nytot/2,1,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
         vy=   coplot3d(2,nytot/2,2,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
         vz=   coplot3d(2,nytot/2,3,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
+        
         Etot= coplot3d(2,nytot/2,4,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         bx=   coplot3d(2,nytot/2,5,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         by=   coplot3d(2,nytot/2,6,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         bz=   coplot3d(2,nytot/2,7,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         #bz=   coplot3d(2,nytot/2,7,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         #denN= coplot3d(2,nytot/2,8,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
-        Pgas=  Etot-0.5*(denT*(vx*vx+vy*vy+vz*vz)+bx*bx+by*by+bz*bz)
+        Pgas=  (Etot-0.5*(denT*(vx*vx+vy*vy+vz*vz)+bx*bx+by*by+bz*bz))/cv
 
 
     plt.clf()
 
     plt.subplot(3, 2, 1)
-    plt.plot(x_ax,denT[4,::],'-ro')
-    plt.title(r'$\rho$')
+    plt.plot(x_ax,denT[4,::],'o')
+    plt.ylabel(r'$\rho$')
+    plt.xlabel(r'$x$')
     plt.ylim((0.,1.))
 
     plt.subplot(3, 2, 2)
-    plt.plot(x_ax,Pgas[4,::],'-ro')
-    plt.title(r'$P_{gas}$')
+    plt.plot(x_ax,Pgas[4,::],'o')
+    plt.ylabel(r'$P_{gas}$')
+    plt.xlabel(r'$x$')
     plt.ylim((0.,1.))
 
     plt.subplot(3, 2, 3)
-    plt.plot(x_ax,vx[4,::],'-ro')
-    plt.title(r'$v_{x}$')
+    plt.plot(x_ax,vx[4,::],'o')
+    plt.ylabel(r'$v_{x}$')
+    plt.xlabel(r'$x$')
     plt.ylim((-0.4,0.8))
 
     plt.subplot(3, 2, 4)
-    plt.plot(x_ax,vy[4,::],'-ro')
-    plt.title(r'$v_{y}$')
+    plt.plot(x_ax,vy[4,::],'o')
+    plt.ylabel(r'$v_{y}$')
+    plt.xlabel(r'$x$')
     plt.ylim((-2.,-0.))
 
 
     plt.subplot(3, 2, 5)
-    plt.plot(x_ax,by[4,::],'-ro')
-    plt.title(r'$B_{y}$')
+    plt.plot(x_ax,by[4,::],'o')
+    plt.ylabel(r'$B_{y}$')
+    plt.xlabel(r'$x$')
     plt.ylim((-1,1.))
 
     plt.subplot(3, 2, 6)
-    plt.plot(x_ax,Pgas[4,::]/denT[4,::],'-ro')
-    plt.title(r'$E_{tot}/\rho$')
-    #plt.ylim((0.5,2.5))
+    plt.plot(x_ax,Pgas[4,::]/denT[4,::],'o')
+    plt.ylabel(r'$P_{th}/\rho$')
+    plt.xlabel(r'$x$')
+    plt.ylim((0.5,2.5))
 
 #plt.ioff()
 
