@@ -19,7 +19,7 @@ subroutine primu(prim,uu)
 #else
   !   kinetic+thermal+magnetic energies
 uu(5) = 0.5*prim(1)*(prim(2)**2+prim(3)**2+prim(4)**2)+cv*prim(5) &
-        +0.5*(prim(6)**2+prim(7)**2+prim(8)**2
+        +0.5*(prim(6)**2+prim(7)**2+prim(8)**2)
 #endif
 
 

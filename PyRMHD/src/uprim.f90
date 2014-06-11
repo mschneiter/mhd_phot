@@ -21,7 +21,7 @@ subroutine uprim(prim,uu,T)
   prim(5)=( ( uu(5)-0.5*r*(prim(2)**2+prim(3)**2+prim(4)**2) ) /cv )
 #else
   !  if MHD defined the magnetic energy is included
-prim(5)=( uu(5)-0.5* ( r*(prim(2)**2+prim(3)**2+prim(4)**2) 
+prim(5)=( uu(5)-0.5* ( r*(prim(2)**2+prim(3)**2+prim(4)**2)   & 
                         +(prim(6)**2+prim(7)**2+prim(8)**2) ) )/cv  
 #endif
   !if(prim(neqdyn).lt.0.) write(*,*) 'ay !!!'
