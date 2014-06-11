@@ -43,45 +43,56 @@ plt.ion()
 path='/Users/esquivel/Desktop/Storage-Diable/MHD-EXO/BIN/'
 
 
+x_ax=np.linspace(0,1,nxtot)
+
 for nout in range(4,5):
     #  this is the ionization rate
     if (firstrun):
         denT= coplot3d(2,nytot/2,0,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         vx=   coplot3d(2,nytot/2,1,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
         vy=   coplot3d(2,nytot/2,2,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
+        vz=   coplot3d(2,nytot/2,3,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
         Etot= coplot3d(2,nytot/2,4,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         bx=   coplot3d(2,nytot/2,5,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         by=   coplot3d(2,nytot/2,6,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
+        bz=   coplot3d(2,nytot/2,7,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         #bz=   coplot3d(2,nytot/2,7,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
         #denN= coplot3d(2,nytot/2,8,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
-        Pgas=  Etot-0.5*(denT*(vx*vx+vy*vy)+bx*bx+by*by)
+        Pgas=  Etot-0.5*(denT*(vx*vx+vy*vy+vz*vz)+bx*bx+by*by+bz*bz)
 
 
     plt.clf()
 
     plt.subplot(3, 2, 1)
-    plt.plot(denT[4,::],'-ro')
+    plt.plot(x_ax,denT[4,::],'-ro')
     plt.title(r'$\rho$')
+    plt.ylim((0.,1.))
 
     plt.subplot(3, 2, 2)
-    plt.plot(Pgas[4,::],'-ro')
+    plt.plot(x_ax,Pgas[4,::],'-ro')
     plt.title(r'$P_{gas}$')
+    plt.ylim((0.,1.))
 
     plt.subplot(3, 2, 3)
-    plt.plot(vx[4,::],'-ro')
+    plt.plot(x_ax,vx[4,::],'-ro')
     plt.title(r'$v_{x}$')
+    plt.ylim((-0.4,0.8))
 
     plt.subplot(3, 2, 4)
-    plt.plot(vy[4,::],'-ro')
+    plt.plot(x_ax,vy[4,::],'-ro')
     plt.title(r'$v_{y}$')
+    plt.ylim((-2.,-0.))
+
 
     plt.subplot(3, 2, 5)
-    plt.plot(by[4,::],'-ro')
-    plt.title(r'$B_{x}$')
+    plt.plot(x_ax,by[4,::],'-ro')
+    plt.title(r'$B_{y}$')
+    plt.ylim((-1,1.))
 
     plt.subplot(3, 2, 6)
-    plt.plot(Etot[4,::]/denT[4,::],'-ro')
+    plt.plot(x_ax,Pgas[4,::]/denT[4,::],'-ro')
     plt.title(r'$E_{tot}/\rho$')
+    #plt.ylim((0.5,2.5))
 
 #plt.ioff()
 
