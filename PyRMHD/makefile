@@ -4,11 +4,13 @@
 #   Name of the executable
 PROGRAM=MHD_huacho
 #
-#   Choice of compiler and flags  ! if mpi mpif90 will be 
-#   used but this is required to adjust some compilation flags
+#   Choice of compiler: ifort and gfortran are tested
+#   if MPI enabled, do not use mpif90, but rather the base compiler
+#   of the mpi build (see 'mpif90 --version')
 #COMPILER= gfortran
-COMPILER= mpif90
+COMPILER= ifort
 #COMPILER= ifort
+
 #FLAGS= -O3 -cpp -i_dynamic -mcmodel=large
 #FLAGS= -O3 -cpp  -mcmodel=large -vec-report0 -traceback -check
 #FLAGS= -O3 -cpp -vec-report0
@@ -35,7 +37,7 @@ MHD = Y
 #   Solver: 
 #   HD  Solvers: HLL  (too difussive), or HLLC
 #   MHD Solvers: HLLE (too difussive), or HLLD (under construction)
-SOLVER = HLLC
+SOLVER = HLLE
 #
 #   Type of output
 OUTDAT = N
@@ -59,7 +61,7 @@ PASSIVES = Y
 #   BBC: cooling function of Benjamin, Benson and Cox (2003)
 #   DMC: Coronal eq. (tabulated) from Dalgarno & Mc Cray (1972)
 #   CHI: from table generated with Chianti
-COOLING = H
+COOLING = ADIABATIC
 #
 #   boundary conditions
 #  (choose only one per boundary + OTHERB if needed)
@@ -282,6 +284,9 @@ FLAGS += -DRADPRES
 endif
 ifeq ($(PMHD),Y)
 FLAGS += -DPMHD
+endif
+ifeq ($(MHD),Y)
+FLAGS += -DMHD
 endif
 #---------------------------------------------------
 $(PROGRAM)  : ${OBJECTS}
