@@ -9,8 +9,9 @@ PROGRAM=MHD_huacho
 #   of the mpi build (see 'mpif90 --version')
 #COMPILER= gfortran
 COMPILER= ifort
-#COMPILER= ifort
-
+#
+#   Compiler flags, make sure they are compatible with 
+#   the previous selection
 #FLAGS= -O3 -cpp -i_dynamic -mcmodel=large
 #FLAGS= -O3 -cpp  -mcmodel=large -vec-report0 -traceback -check
 #FLAGS= -O3 -cpp -vec-report0
@@ -19,18 +20,18 @@ FLAGS= -O3 -cpp
 #---------------------------------------------------
 #   compilation time parameters (Y=on, N=off)
 #   carefull all of the following is case sensitive
-#--------------------------------------`-------------
-#   MPI paralalelization
+#---------------------------------------------------
+#   MPI paralalelization (Y/N)
 MPIP = Y
 #   Double Precision (Y/N Default is single)
 DOUBLEP= Y
 #
-#   Enable Passive MHD 
-#   Includes induction eq with no back reaction to the flow)
+#   Enable Passive MHD (Y/N)
+#   Includes induction eq with no back reaction to the flow
 #   This is compatible with HD solvers (i.e. HLL, HLLC)   
 PMHD = N
 #
-#   Enable MHD (UNDER CONSTRUCTION)
+#   Enable MHD (Y/N UNDER CONSTRUCTION)
 #   This is compatible with MHD solvers (HLLE, HLLD, under construction)
 MHD = Y
 #
@@ -47,11 +48,11 @@ OUTSILO= N
 #
 #   IF silo was selected make sure the libraries are in place,
 #   adjust the following line for that purpose
-#
 #FLAGS += -I/usr/local/silo/include -I/usr/local/szip/include -I/usr/local/hdf5/include/
 #LINKFLAGS = -L/usr/local/szip/lib -L/usr/local/hdf5/lib/ -L/usr/local/silo/lib/
 #LINKFLAGS += -lsiloh5  -lhdf5_fortran -lsz -lz -lstdc++ 
-##   additional equations (i.e. passive scalars)?
+#
+#   additional equations (i.e. passive scalars)?
 PASSIVES = N
 #
 #   Adiabatic or type of cooling (choose only one)
@@ -63,9 +64,9 @@ PASSIVES = N
 #   CHI: from table generated with Chianti
 COOLING = ADIABATIC
 #
-#   boundary conditions
-#  (choose only one per boundary + OTHERB if needed)
-#  optiins are OUTFLOW, CLOSED, PERIODIC
+#   boundary conditions (OUTFLOW, CLOSED, PERIODIC)
+#   choose only one per boundary
+#   + OTHERB (user defined in user_mod.f90) if needed)
 LEFTX   = OUTFLOW
 RIGHTX  = OUTFLOW
 BOTTOMY = OUTFLOW
