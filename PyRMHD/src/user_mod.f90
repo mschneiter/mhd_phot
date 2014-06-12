@@ -9,7 +9,8 @@ module user_mod
   !  here we should load additional modules
   !use star
   !use jet
-  use BrioWu
+  !use BrioWu
+  use OrzagTang
   implicit none
   !  Variables global to the module can be here
   ! real :: variablename
@@ -26,7 +27,8 @@ contains
     implicit none
       
     !  initialize modules loaded by user
-    call init_bw()
+    !call init_bw()
+    call init_ot()
 
   end subroutine init_user_mod
   !--------------------------------------------------------------------
@@ -45,7 +47,8 @@ contains
 
     
     !   Fills the domain w/the setup of the Brio-Wu shock
-    call impose_bw(u)
+    !call impose_bw(u)
+    call impose_ot(u)
     
   end subroutine initial_conditions
   !--------------------------------------------------------------------

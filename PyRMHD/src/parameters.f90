@@ -19,13 +19,13 @@ module parameters
   integer, parameter :: npas=0          ! number of passive scalars 
   integer, parameter :: nghost=2        ! number of ghost cells
   !   mesh size
-  integer, parameter :: nxtot=400
-  integer, parameter :: nytot=8
-  integer, parameter :: nztot=8
+  integer, parameter :: nxtot=50
+  integer, parameter :: nytot=50
+  integer, parameter :: nztot=50
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=8, mpirow=1,mpirowz=1
+  integer, parameter :: mpicol=2, mpirow=2,mpirowz=2
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
@@ -45,9 +45,12 @@ module parameters
   real, parameter :: yr=3.1536E7, day=86400., hr=3600. !yr, day and hour in sec.
   !
   !   box size in code units
-  real, parameter :: xmax=1., ymax=0.01, zmax=0.01
+!  real, parameter :: xmax=1., ymax=0.01, zmax=0.01 !FOR BRIO_WU
+  real, parameter :: xmax=1., ymax=1., zmax=0.01 !FOR ORZAG_TANT
+
   !   box size, corresponds to xmax
-  real, parameter :: xphys=1.
+!  real, parameter :: xphys=1. !FOR ORZAG_TANG
+  real, parameter :: xphys=2.*pi, yphys=2.*pi
   !
   !---------------------------------------------------------------------
   !
@@ -74,7 +77,7 @@ module parameters
   real, parameter :: tmax    =0.15 !*day/tsc
   real, parameter :: dtprint =0.02 !*day/tsc
   real, parameter :: cfl=0.5                    ! Courant number
-  real, parameter :: eta=0.001                  ! viscosity
+  real, parameter :: eta=0.!OZ !0.001 !BW       ! viscosity
   !
   !   for an iwarm (0->from t=0,1->starts from t=itprint*dtprint
   integer, parameter :: iwarm=0

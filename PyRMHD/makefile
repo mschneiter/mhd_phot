@@ -67,12 +67,12 @@ COOLING = ADIABATIC
 #   boundary conditions (OUTFLOW, CLOSED, PERIODIC)
 #   choose only one per boundary
 #   + OTHERB (user defined in user_mod.f90) if needed)
-LEFTX   = OUTFLOW
-RIGHTX  = OUTFLOW
-BOTTOMY = OUTFLOW
-TOPY    = OUTFLOW
-INZ     = OUTFLOW
-OUTZ    = OUTFLOW
+LEFTX   = PERIODIC
+RIGHTX  = PERIODIC
+BOTTOMY = PERIODIC
+TOPY    = PERIODIC
+INZ     = PERIODIC
+OUTZ    = PERIODIC
 OTHERB = N
 #
 #   choice of slope limiter, available limiters are:
@@ -119,6 +119,7 @@ OBJECTS = \
 ./src/difrad.o \
 ./src/difrad_global.o \
 ./src/brio_wu.o \
+./src/orzag_tang.o \
 ./src/star.o \
 ./src/sources.o \
 ./src/thermal_cond.o \
