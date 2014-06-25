@@ -1,9 +1,9 @@
-!=======================================================================
+!=========================================================================
 !   calculates HLLD fluxes from the primitive variables 
 !   on all the domain
 !   choice --> 1, uses primit for the 1st half of timestep (first order)
 !          --> 2, uses primit for second order timestep
-!=======================================================================
+!=========================================================================
 subroutine hlldfluxes(choice)
 #ifdef HLLD
   use parameters
@@ -186,152 +186,31 @@ end subroutine cfastX
           + priml(1)*primr(1)*srmur*slmul*(primr(2)-priml(2)) ) &
           /(srmur*primr(1)-slmul*priml(1) )
     !
-    !--------------------------------------------------------------------------
-    !Variables for the left star region   
-    !--------------------------------------------------------------------------
-    !
-    slmsst=sl-sst 
-    rhostl=priml(1)*slmul/slmsst                                                            !rhoL*
-    !
-    el=0.5*priml(1)*(priml(2)**2+priml(3)**2+priml(4)**2)+cv*priml(5) &                     !eL
-                 +0.5*(priml(6)**2+priml(7)**2+priml(8)**2)
-    !
-    sstmul=sst - priml(2)
-    denl=priml(1)*slmul*slmsst-priml(6)**2
-    !
-    vstl = priml(3) - priml(6)*priml(7)*sstmul/denl                                         !vL*
-    wstl = priml(4) - priml(6)*priml(8)*sstmul/denl                                         !wL*
-    bystl= (priml(7)*priml(1)*slmul**2-priml(6)**2)/denl                                    !byL*
-    bzstl= (priml(8)*priml(1)*slmul**2-priml(6)**2)/denl                                    !bzL*
-    !
-    vdotbl=priml(2)*priml(6)+priml(3)*priml(7)+priml(4)*priml(8)                            !vL dot BL
-    vstdotbstl=priml(2)*priml(6)+ vstl*bystl+wstl*bzstl                                     !vL* dot BL*  
-    !
-    estl= slmul*el-priml(5)*priml(2)+pst*sst+priml(6)*(vdotbl-vstdotbstl)/slmsst            !eL*
-    !
-    !-------------------------------------------------------------------------------
-    !Variables for the right star region
-    !------------------------------------------------------------------------------
-    !
-    srmsst=sr-sst 
-    rhostr=primr(1)*srmur/srmsst                                                            !rhoR*
-    !
-    er=0.5*primr(1)*(primr(2)**2+primr(3)**2+primr(4)**2)+cv*primr(5) &                     !eR
-                 +0.5*(primr(6)**2+primr(7)**2+primr(8)**2)
-    !
-    sstmur=sst - primr(2)
-    denr=primr(1)*srmur*srmsst-primr(6)**2
-    !
-    vstr = primr(3) - primr(6)*primr(7)*sstmur/denr                                         !vR*
-    wstr = primr(4) - primr(6)*primr(8)*sstmur/denr                                         !wR*
-    bystr= (primr(7)*primr(1)*srmur**2-primr(6)**2)/denr                                    !byR*
-    bzstr= (primr(8)*primr(1)*srmur**2-primr(6)**2)/denr                                    !bzR*
-    !
-    vdotbr=primr(2)*primr(6)+primr(3)*primr(7)+primr(4)*primr(8)                            !vR dot BR
-    vstdotbstr=primr(2)*primr(6)+ vstr*bystr+wstr*bzstr                                     !vR* dot BR*
-    !
-    estr= srmur*er-primr(5)*primr(2)+pst*sst+primr(6)*(vdotbr-vstdotbstr)/srmsst            !eR*
-    !
-    !
-    sstmsstl=sst-sstl                                                                       !s*-sL*
-    sstmsstr=sst-sstr                                                                       !s*-sR*
-    !-------------------------------------------------------------------------------
-    !Variables for the star star region
-    !------------------------------------------------------------------------------
-    !
-    dd=sqrt(rhostl)+sqrt(rhostr)
-    vstst =(sqrt(rhostl)*vstl + sqrt(rhostr)*vstr + (bystr-bystl)*sign(1.0,priml(6)))/dd    !v** 
-    wstst =(sqrt(rhostl)*wstl + sqrt(rhostr)*wstr + (bzstr-bzstl)*sign(1.0,priml(6)))/dd    !w**
-    bystst=(sqrt(rhostl)*bystr + sqrt(rhostr)*bystl +  &                                    !by**
-            sqrt(rhostl*rhostr)*(vstr-vstl)*sign(1.0,priml(6)))/dd                            
-    bzstst=(sqrt(rhostl)*bzstr + sqrt(rhostr)*bzstl +  &                                    !bz**
-            sqrt(rhostl*rhostr)*(wstr-wstl)*sign(1.0,primr(6)))/dd
-    ! 
-    !---------------------------------------------------------------------------
-    !============================================
-    ! left star star region 
-    !============================================
-    if(sstmsstl .ge. 0 ) then
-    ! 
-       vststdotbstst= sst*priml(6)+vstst*bystst + wstst*bzstst                              !v** dot B**
-       eststl= estl - sqrt(rhostl)*(vstdotbstl-vststdotbstst)*sign(1.0,priml(6))            !eL**
-    !  
-       uuk(1)=rhostl
-       uuk(2)=rhostl*sstl
-       uuk(3)=rhostl*vstst
-       uuk(4)=rhostl*wstst
-       uuk(5)=eststl
-       uuk(6)=priml(6)
-       uuk(7)=bystst 
-       uuk(8)=bzstst   
-    !      
-       ust(1)=rhostl
-       ust(2)=rhostl*sstl
-       ust(3)=rhostl*vstl
-       ust(4)=rhostl*wstl
-       ust(5)=estl
-       ust(6)=priml(6) 
-       ust(7)=bystl     
-       ust(8)=bzstl   
-    !
-#ifdef PASSIVES
-       uuk(neqdyn+1:neq)=priml(neqdyn+1:neq)*slmul/slmsst
-       ust(neqdyn+1:neq)=priml(neqdyn+1:neq)*slmul/slmsst
-#endif
-    !
-       call primf(priml,fL)
-       call primu(priml,uL)
-    !
-       ff(:)=fL(:)+sstl*uuk(:)-(sstl-sl)*ust(:)-sl*uL(:)
-    !    
-    return
-    endif
-    !-----------------------------------------------------------------------
-    !============================================
-    ! right star star region 
-    !============================================
-    if(sstmsstr .le. 0 ) then
-    !
-       vststdotbstst= sst*primr(6)+vstst*bystst + wstst*bzstst                              !v** dot B**
-       eststr= estr + sqrt(rhostr)*(vstdotbstr-vststdotbstst)*sign(1.0,primr(6))            !eL**
-    !
-       uuk(1)=rhostr
-       uuk(2)=rhostr*sst
-       uuk(3)=rhostr*vstst
-       uuk(4)=rhostr*wstst
-       uuk(5)=eststr
-       uuk(6)=primr(6)
-       uuk(7)=bystst 
-       uuk(8)=bzstst
-    !
-       ust(1)=rhostr
-       ust(2)=rhostr*sst
-       ust(3)=rhostr*vstr
-       ust(4)=rhostr*wstr
-       ust(5)=estr
-       ust(6)=primr(6)    
-       ust(7)=bystr    
-       ust(8)=bzstr   
-    !
-#ifdef PASSIVES
-       uuk(neqdyn+1:neq)=primr(neqdyn+1:neq)*srmur/srmsst
-       ust(neqdyn+1:neq)=primr(neqdyn+1:neq)*srmur/srmsst
-#endif
-     
-       call primf(primr,fR)
-       call primu(primr,uR)
-    !
-       ff(:)=fR(:)+sstr*uuk(:)-(sstr-sr)*ust(:)-sr*uR(:)
-    !
-        return
-    endif
-    !-----------------------------------------------------------------------
-
-    !============================================
+    !=====================================================================
     ! left star region 
-    !============================================
-    if(sstl .ge. 0) then
+    !=====================================================================
     !
+    if(sstl .ge. 0) then
+       !
+       slmsst=sl-sst 
+       rhostl=priml(1)*slmul/slmsst                                                            !rhoL*
+       !
+       el=0.5*priml(1)*(priml(2)**2+priml(3)**2+priml(4)**2)+cv*priml(5) &                     !eL
+                    +0.5*(priml(6)**2+priml(7)**2+priml(8)**2)
+       !
+       sstmul=sst - priml(2)
+       denl=priml(1)*slmul*slmsst-priml(6)**2
+       !
+       vstl = priml(3) - priml(6)*priml(7)*sstmul/denl                                         !vL*
+       wstl = priml(4) - priml(6)*priml(8)*sstmul/denl                                         !wL*
+       bystl= (priml(7)*priml(1)*slmul**2-priml(6)**2)/denl                                    !byL*
+       bzstl= (priml(8)*priml(1)*slmul**2-priml(6)**2)/denl                                    !bzL*
+       !
+       vdotbl=priml(2)*priml(6)+priml(3)*priml(7)+priml(4)*priml(8)                            !vL dot BL
+       vstdotbstl=priml(2)*priml(6)+ vstl*bystl+wstl*bzstl                                     !vL* dot BL*  
+       !
+       estl= slmul*el-priml(5)*priml(2)+pst*sst+priml(6)*(vdotbl-vstdotbstl)/slmsst            !eL*
+       !
        uuk(1)=rhostl
        uuk(2)=rhostl*sst
        uuk(3)=rhostl*vstl
@@ -340,25 +219,43 @@ end subroutine cfastX
        uuk(6)=priml(6)    
        uuk(7)=bystl    
        uuk(8)=bzstl   
-    !
+       !
 #ifdef PASSIVES
        uuk(neqdyn+1:neq)=priml(neqdyn+1:neq)*slmul/slmsst
 #endif
- 
        call primf(priml,fL)
        call primu(priml,uL)
-    !
+       !
        ff(:)=fL(:)+sl*uuk(:)-sl*uL(:)
-    !
+       !
     return
     endif
-    !--------------------------------
-
-    !============================================
-    ! right star region 
-    !============================================
-    if(sstr .ge. 0) then
     !
+    !=====================================================================
+    ! right star region 
+    !=====================================================================
+    !
+    if(sstr .ge. 0) then
+       !
+       srmsst=sr-sst 
+       rhostr=primr(1)*srmur/srmsst                                                            !rhoR*
+       !
+       er=0.5*primr(1)*(primr(2)**2+primr(3)**2+primr(4)**2)+cv*primr(5) &                     !eR
+                    +0.5*(primr(6)**2+primr(7)**2+primr(8)**2)
+       !
+       sstmur=sst - primr(2)
+       denr=primr(1)*srmur*srmsst-primr(6)**2
+       !
+       vstr = primr(3) - primr(6)*primr(7)*sstmur/denr                                         !vR*
+       wstr = primr(4) - primr(6)*primr(8)*sstmur/denr                                         !wR*
+       bystr= (primr(7)*primr(1)*srmur**2-primr(6)**2)/denr                                    !byR*
+       bzstr= (primr(8)*primr(1)*srmur**2-primr(6)**2)/denr                                    !bzR*
+       !
+       vdotbr=primr(2)*primr(6)+primr(3)*primr(7)+primr(4)*primr(8)                            !vR dot BR
+       vstdotbstr=primr(2)*primr(6)+ vstr*bystr+wstr*bzstr                                     !vR* dot BR*
+       !
+       estr= srmur*er-primr(5)*primr(2)+pst*sst+primr(6)*(vdotbr-vstdotbstr)/srmsst            !eR*
+       !
        uuk(1)=rhostr
        uuk(2)=rhostr*sst
        uuk(3)=rhostr*vstr
@@ -367,19 +264,156 @@ end subroutine cfastX
        uuk(6)=primr(6)    
        uuk(7)=bystr    
        uuk(8)=bzstr   
-    !
+       !
 #ifdef PASSIVES
        uuk(neqdyn+1:neq)=primr(neqdyn+1:neq)*srmur/srmsst
 #endif
-    !
+       !
        call primf(primr,fR)
        call primu(primr,uR)
-    !
+       !
        ff(:)=fR(:)+sr*uuk(:)-sr*uR(:)
-    !
+       !
     return
     endif
-    !-----------------------------------------------------------------------
+    !
+    sstmsstl=sst-sstl                               !SM-SL*
+    sstmsstr=sst-sstr                               !SM-SR*
+    !
+    !=====================================================================
+    ! left star star region 
+    !=====================================================================
+    !
+    if(sstmsstl .ge. 0 ) then
+       !
+       slmsst=sl-sst 
+       rhostl=priml(1)*slmul/slmsst                                                            !rhoL*
+       !
+       el=0.5*priml(1)*(priml(2)**2+priml(3)**2+priml(4)**2)+cv*priml(5) &                     !eL
+                    +0.5*(priml(6)**2+priml(7)**2+priml(8)**2)
+       !
+       sstmul=sst - priml(2)
+       denl=priml(1)*slmul*slmsst-priml(6)**2
+       !
+       vstl = priml(3) - priml(6)*priml(7)*sstmul/denl                                         !vL*
+       wstl = priml(4) - priml(6)*priml(8)*sstmul/denl                                         !wL*
+       bystl= (priml(7)*priml(1)*slmul**2-priml(6)**2)/denl                                    !byL*
+       bzstl= (priml(8)*priml(1)*slmul**2-priml(6)**2)/denl                                    !bzL*
+       !
+       vdotbl=priml(2)*priml(6)+priml(3)*priml(7)+priml(4)*priml(8)                            !vL dot BL
+       vstdotbstl=priml(2)*priml(6)+ vstl*bystl+wstl*bzstl                                     !vL* dot BL*  
+       !
+       estl= slmul*el-priml(5)*priml(2)+pst*sst+priml(6)*(vdotbl-vstdotbstl)/slmsst            !eL*
+       !
+       dd=sqrt(rhostl)+sqrt(rhostr)
+       vstst =(sqrt(rhostl)*vstl + sqrt(rhostr)*vstr + (bystr-bystl)*sign(1.0,priml(6)))/dd    !v** 
+       wstst =(sqrt(rhostl)*wstl + sqrt(rhostr)*wstr + (bzstr-bzstl)*sign(1.0,priml(6)))/dd    !w**
+       bystst=(sqrt(rhostl)*bystr + sqrt(rhostr)*bystl +  &                                    !by**
+               sqrt(rhostl*rhostr)*(vstr-vstl)*sign(1.0,priml(6)))/dd                            
+       bzstst=(sqrt(rhostl)*bzstr + sqrt(rhostr)*bzstl +  &                                    !bz**
+               sqrt(rhostl*rhostr)*(wstr-wstl)*sign(1.0,primr(6)))/dd
+       ! 
+       vststdotbstst= sst*priml(6)+vstst*bystst + wstst*bzstst                                 !v** dot B**
+       eststl= estl - sqrt(rhostl)*(vstdotbstl-vststdotbstst)*sign(1.0,priml(6))               !eL**
+       !  
+       uuk(1)=rhostl
+       uuk(2)=rhostl*sstl
+       uuk(3)=rhostl*vstst
+       uuk(4)=rhostl*wstst
+       uuk(5)=eststl
+       uuk(6)=priml(6)
+       uuk(7)=bystst 
+       uuk(8)=bzstst   
+       !      
+       ust(1)=rhostl
+       ust(2)=rhostl*sstl
+       ust(3)=rhostl*vstl
+       ust(4)=rhostl*wstl
+       ust(5)=estl
+       ust(6)=priml(6) 
+       ust(7)=bystl     
+       ust(8)=bzstl   
+       !
+#ifdef PASSIVES
+       uuk(neqdyn+1:neq)=priml(neqdyn+1:neq)*slmul/slmsst
+       ust(neqdyn+1:neq)=priml(neqdyn+1:neq)*slmul/slmsst
+#endif
+       !
+       call primf(priml,fL)
+       call primu(priml,uL)
+       !
+       ff(:)=fL(:)+sstl*uuk(:)-(sstl-sl)*ust(:)-sl*uL(:)
+       !    
+    return
+    endif
+    !
+    !=====================================================================
+    ! right star star region 
+    !=====================================================================
+    !
+    if(sstmsstr .le. 0 ) then
+       !
+       srmsst=sr-sst 
+       rhostr=primr(1)*srmur/srmsst                                                            !rhoR*
+       !
+       er=0.5*primr(1)*(primr(2)**2+primr(3)**2+primr(4)**2)+cv*primr(5) &                     !eR
+                    +0.5*(primr(6)**2+primr(7)**2+primr(8)**2)
+       !
+       sstmur=sst - primr(2)
+       denr=primr(1)*srmur*srmsst-primr(6)**2
+       !
+       vstr = primr(3) - primr(6)*primr(7)*sstmur/denr                                         !vR*
+       wstr = primr(4) - primr(6)*primr(8)*sstmur/denr                                         !wR*
+       bystr= (primr(7)*primr(1)*srmur**2-primr(6)**2)/denr                                    !byR*
+       bzstr= (primr(8)*primr(1)*srmur**2-primr(6)**2)/denr                                    !bzR*
+       !
+       vdotbr=primr(2)*primr(6)+primr(3)*primr(7)+primr(4)*primr(8)                            !vR dot BR
+       vstdotbstr=primr(2)*primr(6)+ vstr*bystr+wstr*bzstr                                     !vR* dot BR*
+       !
+       estr= srmur*er-primr(5)*primr(2)+pst*sst+primr(6)*(vdotbr-vstdotbstr)/srmsst            !eR*
+       ! 
+       dd=sqrt(rhostl)+sqrt(rhostr)
+       vstst =(sqrt(rhostl)*vstl + sqrt(rhostr)*vstr + (bystr-bystl)*sign(1.0,priml(6)))/dd    !v** 
+       wstst =(sqrt(rhostl)*wstl + sqrt(rhostr)*wstr + (bzstr-bzstl)*sign(1.0,priml(6)))/dd    !w**
+       bystst=(sqrt(rhostl)*bystr + sqrt(rhostr)*bystl +  &                                    !by**
+               sqrt(rhostl*rhostr)*(vstr-vstl)*sign(1.0,priml(6)))/dd                            
+       bzstst=(sqrt(rhostl)*bzstr + sqrt(rhostr)*bzstl +  &                                    !bz**
+               sqrt(rhostl*rhostr)*(wstr-wstl)*sign(1.0,primr(6)))/dd
+       ! 
+       vststdotbstst= sst*primr(6)+vstst*bystst + wstst*bzstst                                 !v** dot B**
+       eststr= estr + sqrt(rhostr)*(vstdotbstr-vststdotbstst)*sign(1.0,primr(6))               !eL**
+       !
+       uuk(1)=rhostr
+       uuk(2)=rhostr*sst
+       uuk(3)=rhostr*vstst
+       uuk(4)=rhostr*wstst
+       uuk(5)=eststr
+       uuk(6)=primr(6)
+       uuk(7)=bystst 
+       uuk(8)=bzstst
+       !
+       ust(1)=rhostr
+       ust(2)=rhostr*sst
+       ust(3)=rhostr*vstr
+       ust(4)=rhostr*wstr
+       ust(5)=estr
+       ust(6)=primr(6)    
+       ust(7)=bystr    
+       ust(8)=bzstr   
+       !
+#ifdef PASSIVES
+       uuk(neqdyn+1:neq)=primr(neqdyn+1:neq)*srmur/srmsst
+       ust(neqdyn+1:neq)=primr(neqdyn+1:neq)*srmur/srmsst
+#endif
+       !
+       call primf(primr,fR)
+       call primu(primr,uR)
+       !
+       ff(:)=fR(:)+sstr*uuk(:)-(sstr-sr)*ust(:)-sr*uR(:)
+       !
+    return
+    endif
+    !
     end subroutine primfhlld
 #endif
 end subroutine hlldfluxes
