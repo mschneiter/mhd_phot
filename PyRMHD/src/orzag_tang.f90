@@ -6,14 +6,15 @@ module OrzagTang
   implicit none
   real :: rho, vx, vy, vz, p
   real :: Bx, By, Bz
+  real , parameter :: twopi=2.*pi
 contains
 
   subroutine init_ot()
     implicit none
     
-    rho = 25./9.
-    p   = 5./3.
-    
+    rho = 25./(36.*pi)
+    p   = 5./(12*pi) ! 5. /(12.*pi)
+        
   end subroutine init_ot
 
   !--------------------------------------------------------------------
@@ -31,14 +32,15 @@ contains
           do k=nzmin,nzmax
 
              ! Position measured from the bottom corner of the grid
-             x=(float(i+coords(0)*nx)+0.5)*dx !WHY +0.5?
-             y=(float(i+coords(1)*ny)+0.5)*dy !WHY +0.5?
+             x=(float(i+coords(0)*nx)+0.5)*dx*rsc !WHY +0.5?
+             y=(float(j+coords(1)*ny)+0.5)*dy*rsc !WHY +0.5?
+                                              !ANS: Position of cell center
 
-                vx = -sin(y )
-                vy =  sin(y )
+                vx = -sin( y*twopi )
+                vy =  sin( x*twopi )
                 vz = 0.
-                bx = -sin(y )
-                by =  sin(2*x)
+                bx = -sin( y*twopi  )/sqrt(4*pi)
+                by =  sin(2.*x*twopi)/sqrt(4*pi)
                 bz = 0.
                               
 

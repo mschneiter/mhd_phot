@@ -203,7 +203,7 @@ subroutine initmain(time, tprint, itprint)
     print'(a)',''
 #endif
     print'(a,i0,a)', 'Running with ',neq,' total equations' 
-    print'(a,i0,a,i0,a,i0)','Resolution is (nx, ny, nz) ', nx,' ',ny,' ',nz
+    print'(a,i0,a,i0,a,i0)','Resolution is (nxtot, nytot, nztot) ', nxtot,' ',nytot,' ',nztot
     print'(a)',''
 #ifdef MHD
      print'(a)', 'Full MHD enabled'

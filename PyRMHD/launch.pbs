@@ -10,7 +10,7 @@
 ### Queue name and number of nodes:processors per node
 #PBS -q default
 #PBS -r n
-#PBS -l nodes=1:old:ppn=8
+#PBS -l nodes=2:old:ppn=8
 
 ### Set environment variables for mpi.
 export PATH=/usr/mpi/intel/mvapich2-1.8/bin:/usr/local/bin:${PATH}

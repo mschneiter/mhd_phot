@@ -19,13 +19,13 @@ module parameters
   integer, parameter :: npas=0          ! number of passive scalars 
   integer, parameter :: nghost=2        ! number of ghost cells
   !   mesh size
-  integer, parameter :: nxtot=50
-  integer, parameter :: nytot=50
-  integer, parameter :: nztot=50
+  integer, parameter :: nxtot=400
+  integer, parameter :: nytot=400
+  integer, parameter :: nztot=4
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=2, mpirow=2,mpirowz=2
+  integer, parameter :: mpicol=4, mpirow=4,mpirowz=1
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
@@ -35,8 +35,8 @@ module parameters
   !   some physical constants (and pi)
   real, parameter :: amh=1.66e-24,mu=1.3,Kb=1.38e-16
   real, parameter :: Hmm=1.007,Rg=8.3145e7, Ggrav=6.67259e-8
-  real, parameter :: cv=1., gamma=(cv+1.)/cv
-  real, parameter :: pi=3.1415926535
+  real, parameter :: cv=1.5, gamma=(cv+1.)/cv
+  real, parameter :: pi=acos(-1.)!3.1415926535
   real, parameter :: Msun=1.99E33, Rsun=6.955e10
   real, parameter :: Mjup=1.898E30
   real, parameter :: pc=3.0857E18, AU=1.496e13
@@ -46,11 +46,11 @@ module parameters
   !
   !   box size in code units
 !  real, parameter :: xmax=1., ymax=0.01, zmax=0.01 !FOR BRIO_WU
-  real, parameter :: xmax=1., ymax=1., zmax=0.01 !FOR ORZAG_TANT
+  real, parameter :: xmax=1., ymax=1., zmax=1./100. !FOR ORZAG_TANG
 
   !   box size, corresponds to xmax
 !  real, parameter :: xphys=1. !FOR ORZAG_TANG
-  real, parameter :: xphys=2.*pi, yphys=2.*pi
+  real, parameter :: xphys= 1., yphys=1.
   !
   !---------------------------------------------------------------------
   !
@@ -74,14 +74,14 @@ module parameters
   real, parameter :: nenv=44., Tenv=10., venv=0.0
   !--------------------------------------------------------------------
   !   maximum time of integration and output interval
-  real, parameter :: tmax    =0.15 !*day/tsc
-  real, parameter :: dtprint =0.02 !*day/tsc
-  real, parameter :: cfl=0.5                    ! Courant number
-  real, parameter :: eta=0.!OZ !0.001 !BW       ! viscosity
+  real, parameter :: tmax    =3.5 !*day/tsc
+  real, parameter :: dtprint =0.05 !*day/tsc
+  real, parameter :: cfl=0.4                    ! Courant number
+  real, parameter :: eta=0.001!OZ !0.001 !BW       ! viscosity
   !
   !   for an iwarm (0->from t=0,1->starts from t=itprint*dtprint
   integer, parameter :: iwarm=0
-  integer            :: itprint0=4
+  integer            :: itprint0=149
   !--------------------------------------------------------------------
   !   some derived parameters (no need of user's input below this line)
   !--------------------------------------------------------------------

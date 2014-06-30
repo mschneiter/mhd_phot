@@ -89,7 +89,8 @@ program euler
      !endif
      time = time + dt
      if (rank.eq.1) print'(a,es12.3,a,es12.3,a,es12.3,a)',            &
-     'time=',time*tsc/day,' day  dt=', dt*tsc/day,' day tprint=',tprint*tsc/day,' day'
+     'time=',time,'  dt=', dt,' tprint=',tprint
+     !'time=',time*tsc/day,' day  dt=', dt*tsc/day,' day tprint=',tprint*tsc/day,' day'
      !'time=',time*tsc/yr,' yr  dt=', dt*tsc/yr,' yr tprint=',tprint*tsc/yr,' yr'
      !
      !   advances the solution
