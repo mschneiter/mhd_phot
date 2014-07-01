@@ -38,7 +38,7 @@ MHD = Y
 #   Solver: 
 #   HD  Solvers: HLL  (too difussive), or HLLC
 #   MHD Solvers: HLLE (too difussive), or HLLD (under construction)
-SOLVER = HLLE
+SOLVER = HLLD
 #
 #   Type of output
 OUTDAT = N
@@ -137,6 +137,7 @@ OBJECTS = \
 ./src/hllfluxes.o 	\
 ./src/hllcfluxes.o 	\
 ./src/hllefluxes.o 	\
+./src/hlldfluxes.o 	\
 ./src/boundaryI.o	\
 ./src/boundaryII.o	\
 ./src/step.o 	\
