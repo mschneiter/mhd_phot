@@ -79,7 +79,7 @@ OTHERB = N
 #   limiter =-1: no average, 0 : no limiter, 1: Minmod,
 #   2: Van Leer, 3: Van Albada,4: UMIST, 5: Woodward
 #   6: Superbee
-LIMITER =  1
+LIMITER = 1
 #
 #   Enable (isotropic) thermal conduction (Y/N)
 THERMAL_COND = N

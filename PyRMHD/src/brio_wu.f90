@@ -20,6 +20,16 @@ contains
     ByL  = 1.   ; ByR  = -1.
     BzL  = 0.   ; BzR  =  0.
 
+    !rhoL = 1.08             ; rhoR =  1.0
+    !pL   = 0.95             ; pR   =  1.0
+    !vxL  = 1.2              ; vxR  =  0.
+    !vyL  = 0.01             ; vyR  =  0.
+    !vzL  = 0.5              ; vzR  =  0.
+    !BxL  = 2. /sqrt(4.*pi)  ; BxR  = 2. /sqrt(4.*pi)
+    !ByL  = 3.6/sqrt(4.*pi)  ; ByR  = 4. /sqrt(4.*pi)
+    !BzL  = 2. /sqrt(4.*pi)  ; BzR  = 2. /sqrt(4.*pi)
+
+
   end subroutine init_bw
 
   !--------------------------------------------------------------------

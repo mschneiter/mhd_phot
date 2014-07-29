@@ -39,13 +39,11 @@ Bsc= np.sqrt(4.*math.acos(-1.))
 firstrun=True
 plt.ion()
 
-
-path='/Users/esquivel/Desktop/Storage-Diable/MHD-EXO/BIN/'
-
+path='/Users/esquivel/Desktop/Storage-Diable/MHD-EXO/OT-HLLD/BIN/'
 
 x_ax=np.linspace(0,1,nxtot)
 
-for nout in range(0,40):
+for nout in range(10,11):
     #  this is the ionization rate
     if (firstrun):
         denT= coplot3d(3,nztot/2,0,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
@@ -67,8 +65,8 @@ for nout in range(0,40):
     plt.clf()
     plt.imshow(denT,cmap='jet',origin='lower',vmin=0.05,vmax=0.5)
     plt.colorbar()
-    plt.show()  
-    plt.savefig('dens-OT-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
+    plt.show()
+    plt.savefig('HLLD/dens-OT-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
     
 
 #    plt.figure(2)

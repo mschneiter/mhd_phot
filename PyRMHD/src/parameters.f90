@@ -35,7 +35,7 @@ module parameters
   !   some physical constants (and pi)
   real, parameter :: amh=1.66e-24,mu=1.3,Kb=1.38e-16
   real, parameter :: Hmm=1.007,Rg=8.3145e7, Ggrav=6.67259e-8
-  real, parameter :: cv=1.5, gamma=(cv+1.)/cv
+  real, parameter :: cv=1.5, gamma=(cv+1.)/cv   !BW
   real, parameter :: pi=acos(-1.)!3.1415926535
   real, parameter :: Msun=1.99E33, Rsun=6.955e10
   real, parameter :: Mjup=1.898E30
@@ -74,10 +74,10 @@ module parameters
   real, parameter :: nenv=44., Tenv=10., venv=0.0
   !--------------------------------------------------------------------
   !   maximum time of integration and output interval
-  real, parameter :: tmax    =3.5 !*day/tsc
-  real, parameter :: dtprint =0.05 !*day/tsc
-  real, parameter :: cfl=0.4                    ! Courant number
-  real, parameter :: eta=0.001!OZ !0.001 !BW       ! viscosity
+  real, parameter :: tmax    = 2.51 !*day/tsc
+  real, parameter :: dtprint = 0.05 !*day/tsc
+  real, parameter :: cfl=0.4                       ! Courant number
+  real, parameter :: eta=0.01  !OZ !0.001 !BW       ! viscosity
   !
   !   for an iwarm (0->from t=0,1->starts from t=itprint*dtprint
   integer, parameter :: iwarm=0

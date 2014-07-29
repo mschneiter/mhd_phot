@@ -44,8 +44,7 @@ contains
     implicit none
     real, intent(out) :: u(neq,nxmin:nxmax,nymin:nymax,nzmin:nzmax)
     real, intent(in) :: time
-
-    
+  
     !   Fills the domain w/the setup of the Brio-Wu shock
     !call impose_bw(u)
     call impose_ot(u)
