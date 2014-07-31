@@ -119,20 +119,20 @@ contains
   !  in Powell et al. 1999
   !--------------------------------------------------------------------
 #ifdef DIVBCORR
-  subroutine divbcorr_source(i,j,k,pp,s)
+  subroutine divbcorr_source(i,j,k,pp(:,i,j,k),s)
     implicit none
-    real, intent(in)  :: pp(neq)
+    real, intent(in)  :: pp(neq,)
     real, intent(out) :: s(neq)
+    real :: divb
     integer :: i, j, k
     
 
-    call calcdivb(i,j,k,pp,divb)
+    call calcdivb(i,j,k,pp(:,i,j,k),divb)
     ! update source terms
       ! momenta
-       divb=....
-      s(2)= s(2)-divb*pp(2) 
-      s(3)= s(3)-divb*pp(3) 
-      s(4)= s(4)-divb*pp(4) 
+      s(2)= s(2)-divb*pp(2,i,j,k) 
+      s(3)= s(3)-divb*pp(3,i,j,k) 
+      s(4)= s(4)-divb*pp(4,i,j,k) 
 
       ! energy
       s(5)= s(5)-divb*(pp(2)*pp(6)+pp(3)+pp(7)+pp(4)*pp(8))      
@@ -144,18 +144,7 @@ contains
 
   end subroutine divbcorr_source
 
-! Calculates the divergence of the magnetic field
 
-  subroutine calcdivb(i,j,k,primit(6:8,i,j,k),divb)
-    use globals, onlly : dx, dy, dz
-    implicit none
-    
-    divb=    (prim(6,i,j,k)-prim(6,i-1,j,k))/dx  &
-         + (prim(7,i,j,k)-prim(7,i,j-1,k))/dy  &
-         + (prim(8,i,j,k)-prim(8,i,j-1,k))/dz
-    
-    
-  end subroutine divb
   
 #endif
   !--------------------------------------------------------------------

@@ -7,8 +7,8 @@ PROGRAM=MHD_huacho
 #   Choice of compiler: ifort and gfortran are tested
 #   if MPI enabled, do not use mpif90, but rather the base compiler
 #   of the mpi build (see 'mpif90 --version')
-#COMPILER= gfortran
-COMPILER= ifort
+COMPILER= gfortran
+#COMPILER= ifort
 #
 #   Compiler flags, make sure they are compatible with 
 #   the previous selection
@@ -102,6 +102,9 @@ GRAV = N
 #
 #   Include radiative pressure (y/N)
 RADPRES = N
+#
+#   Include terms proportional to DIV B (powell et al. 1999) (y/N)
+DIVBCORR = N
 #
 #   Enable the N-Body module (Y/N) not implemented yet!
 #   NBODY = N
@@ -290,6 +293,9 @@ FLAGS += -DPMHD
 endif
 ifeq ($(MHD),Y)
 FLAGS += -DMHD
+endif
+ifeq ($(DIVBCORR),Y)
+FLAGS += -DDIVBCORR
 endif
 #---------------------------------------------------
 $(PROGRAM)  : ${OBJECTS}
