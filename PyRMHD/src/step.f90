@@ -14,9 +14,6 @@ subroutine step(dt)
   real, intent(in) :: dt
   integer :: i, j, k
   real :: dtdx, dtdy, dtdz
-#ifdef DIVBCORR
-  real, dimension(nx,ny,nz) :: divb
-#endif
   !
   dtdx=dt/dx
   dtdy=dt/dy
@@ -31,22 +28,8 @@ subroutine step(dt)
                                  -dtdy*(g(:,i,j,k)-g(:,i,j-1,k))    &
                                  -dtdz*(h(:,i,j,k)-h(:,i,j,k-1))
 
-!#ifdef DIVBCORR           
-!           call calcdivb(i,j,k,primit(:,i,j,k),divb(i,j,k))
-!           divb(i,j,k) =    (primit(6,i,j,k)-primit(6,i-1,j,k))/dx  &
-!                          + (primit(7,i,j,k)-primit(7,i,j-1,k))/dy  &
-!                          + (primit(8,i,j,k)-primit(8,i,j-1,k))/dz
-!#endif
-#if defined(SOURCE) && defined(DIVBCORR)
-           divb(i,j,k) =    (primit(6,i,j,k)-primit(6,i-1,j,k))/dx  &
-                          + (primit(7,i,j,k)-primit(7,i,j-1,k))/dy  &
-                          + (primit(8,i,j,k)-primit(8,i,j-1,k))/dz
-           call source(i,j,k,primit(:,i,j,k),divb(i,j,k))
-           up(:,i,j,k)= up(:,i,j,k)+dt*s(:)
-#endif
-
-#if defined(SOURCE) && defined(DIVBCORR)
-           call source(i,j,k,primit(:,i,j,k),divb(i,j,k))
+#ifdef SOURCE
+           call source(i,j,k,primit(:,i,j,k),s)
            up(:,i,j,k)= up(:,i,j,k)+dt*s(:)
 #endif
            !

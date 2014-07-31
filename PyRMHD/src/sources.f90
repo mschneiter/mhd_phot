@@ -110,9 +110,6 @@ contains
 
   end subroutine radpress_source
 #endif
-
-
-
   !--------------------------------------------------------------------
   !  Adds terms proportional to div B in Faraday's Law,
   !  momentum equationand energy equation as propoed 
@@ -120,16 +117,19 @@ contains
   !--------------------------------------------------------------------
 #ifdef DIVBCORR
   subroutine divbcorr_source(i,j,k,pp,s)
+
     implicit none
     real, intent(in)  :: pp(neq)
     real, intent(out) :: s(neq)
+    real,             :: divb
     integer :: i, j, k
     
+    divb=  (prim(6,i,j,k)-prim(6,i-1,j,k))/dx  &
+         + (prim(7,i,j,k)-prim(7,i,j-1,k))/dy  &
+         + (prim(8,i,j,k)-prim(8,i,j-1,k))/dz
 
-    call calcdivb(i,j,k,pp,divb)
     ! update source terms
       ! momenta
-       divb=....
       s(2)= s(2)-divb*pp(2) 
       s(3)= s(3)-divb*pp(3) 
       s(4)= s(4)-divb*pp(4) 
@@ -143,20 +143,6 @@ contains
       s(8)=s(8)-divb*pp(8)
 
   end subroutine divbcorr_source
-
-! Calculates the divergence of the magnetic field
-
-  subroutine calcdivb(i,j,k,primit(6:8,i,j,k),divb)
-    use globals, onlly : dx, dy, dz
-    implicit none
-    
-    divb=    (prim(6,i,j,k)-prim(6,i-1,j,k))/dx  &
-         + (prim(7,i,j,k)-prim(7,i,j-1,k))/dy  &
-         + (prim(8,i,j,k)-prim(8,i,j-1,k))/dz
-    
-    
-  end subroutine divb
-  
 #endif
   !--------------------------------------------------------------------
 
