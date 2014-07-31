@@ -98,13 +98,13 @@ RADDIFF_GLOBAL= N
 SOURCE = Y
 #
 #   Include gravity (Y/N) (from point sources)
-GRAV = N
+GRAV = Y
 #
 #   Include radiative pressure (y/N)
 RADPRES = N
 #
 #   Include terms proportional to DIV B (powell et al. 1999) (y/N)
-DIVBCORR = N
+DIVBCORR = Y
 #
 #   Enable the N-Body module (Y/N) not implemented yet!
 #   NBODY = N

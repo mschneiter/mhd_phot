@@ -42,19 +42,3 @@ end subroutine step
 
 !=======================================================================
 
-
-! Calculates the divergence of the magnetic field
-
-!! subroutine calcdivb(i,j,k,primit(:,i,j,k),divb(i,j,k))
-!!   use globals, only : dx, dy, dz
-!!   implicit none
-!!   real, dimension(nx,ny,nz) :: divb
-!!  
-!!  divb(i,j,k) =    (primit(6,i,j,k)-primit(6,i-1,j,k))/dx  &
-!!                 + (primit(7,i,j,k)-primit(7,i,j-1,k))/dy  &
-!!                 + (primit(8,i,j,k)-primit(8,i,j-1,k))/dz
-!!   
-!!  
-!!  end subroutine divb
-
- 

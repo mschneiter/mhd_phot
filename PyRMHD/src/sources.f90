@@ -34,10 +34,10 @@ contains
   subroutine grav_source(xc,yc,zc,pp,s)
     use star  ! this module contains the position of the planet
     implicit none
-    real, intent(in)  :: xc, yc, zc
-    real, intent(in)  :: pp(neq)
+    real, intent(in)    :: xc, yc, zc
+    real, intent(in)    :: pp(neq)
     real, intent(inout) :: s(neq)
-    integer, parameter :: nb=2   ! 2 particles
+    integer, parameter  :: nb=2   ! 2 particles
     real :: x(nb),y(nb),z(nb), GM(np), rad2(np)
     integer :: i
 
@@ -117,32 +117,44 @@ contains
   !--------------------------------------------------------------------
 #ifdef DIVBCORR
   subroutine divbcorr_source(i,j,k,pp,s)
-
+   
     implicit none
     real, intent(in)  :: pp(neq)
     real, intent(out) :: s(neq)
-    real,             :: divb
+    real              :: divB
     integer :: i, j, k
-    
-    divb=  (prim(6,i,j,k)-prim(6,i-1,j,k))/dx  &
-         + (prim(7,i,j,k)-prim(7,i,j-1,k))/dy  &
-         + (prim(8,i,j,k)-prim(8,i,j-1,k))/dz
+
+    call divergence_B(i,j,k,divB)
 
     ! update source terms
       ! momenta
-      s(2)= s(2)-divb*pp(2) 
-      s(3)= s(3)-divb*pp(3) 
-      s(4)= s(4)-divb*pp(4) 
+      s(2)= s(2)-divB*pp(2) 
+      s(3)= s(3)-divB*pp(3) 
+      s(4)= s(4)-divB*pp(4) 
 
       ! energy
-      s(5)= s(5)-divb*(pp(2)*pp(6)+pp(3)+pp(7)+pp(4)*pp(8))      
+      s(5)= s(5)-divB*(pp(2)*pp(6)+pp(3)+pp(7)+pp(4)*pp(8))      
 
       ! Faraday law
-      s(6)=s(6)-divb*pp(6)
-      s(7)=s(7)-divb*pp(7)
-      s(8)=s(8)-divb*pp(8)
+      s(6)=s(6)-divB*pp(6)
+      s(7)=s(7)-divB*pp(7)
+      s(8)=s(8)-divB*pp(8)
 
   end subroutine divbcorr_source
+
+  subroutine divergence_B(i,j,k,d)
+  use globals
+  implicit none
+  integer, intent(in) :: i,j,k
+  real, intent(out)   :: d
+    
+  d=  (primit(6,i,j,k)-primit(6,i-1,j,k))/dx  &
+    + (primit(7,i,j,k)-primit(7,i,j-1,k))/dy  &
+    + (primit(8,i,j,k)-primit(8,i,j,k-1))/dz
+
+  end subroutine divergence_B
+
+
 #endif
   !--------------------------------------------------------------------
 
@@ -175,6 +187,7 @@ contains
     call radpress_source(i,j,k,x,y,z,r,prim,s)
 #endif
 #ifdef DIVBCORR
+   
     !  divergence correction Powell et al. 1999
     call divbcorr_source(i,j,k,prim,s)
 #endif
