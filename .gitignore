@@ -9,5 +9,6 @@
 *.err
 *.out
 *.png
+*.bak*
 
 PyRMHD/MHD_huacho

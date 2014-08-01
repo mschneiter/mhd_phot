@@ -17,6 +17,7 @@ module user_mod
 
 contains
 
+
   !--------------------------------------------------------------------
   !   Here the parameters of the User Defined module are initialized, 
   !   and scaled to code units
@@ -32,7 +33,6 @@ contains
 
   end subroutine init_user_mod
   !--------------------------------------------------------------------
-
 
 
   !--------------------------------------------------------------------
@@ -52,7 +52,6 @@ contains
   end subroutine initial_conditions
   !--------------------------------------------------------------------
  
-
 
   !--------------------------------------------------------------------
   !   User Defined Boundary conditions 
