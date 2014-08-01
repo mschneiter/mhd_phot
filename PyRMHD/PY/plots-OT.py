@@ -1,9 +1,8 @@
 from huachoUtils import *
 import matplotlib as mpl
-import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
 from matplotlib.colors import LogNorm
-import math
+
 
 mpl.rc('xtick',labelsize=8)
 mpl.rc('ytick',labelsize=8)
@@ -26,8 +25,8 @@ def add_inner_title(ax, title, loc, size=None, **kwargs):
 nxtot=400
 nytot=400
 nztot=4
-mpiX=2
-mpiY=2
+mpiX=4
+mpiY=4
 mpiZ=1
 neqs=8
 
@@ -40,8 +39,7 @@ Bsc= np.sqrt(4.*math.acos(-1.))
 firstrun=True
 plt.ion()
 
-#path='/Users/esquivel/Desktop/Storage-Diable/MHD-EXO/OT-HLLD/BIN/'
-path='/home/matis/scratch/matis/mhd_phot/PyRMHD/BIN/'
+path='/Users/esquivel/Desktop/Storage-Diable/MHD-EXO/OT-HLLD/BIN/'
 
 x_ax=np.linspace(0,1,nxtot)
 
@@ -69,7 +67,6 @@ for nout in range(10,11):
     plt.imshow(denT,cmap='jet',origin='lower',vmin=0.05,vmax=0.5)
     plt.colorbar()
     plt.show()
-<<<<<<< HEAD
     plt.savefig('HLLD/rho-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
 
     plt.figure(2)
@@ -78,10 +75,6 @@ for nout in range(10,11):
     plt.colorbar()
     plt.show()
     plt.savefig('HLLD/divB-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
-=======
-#    plt.savefig('HLLD/dens-OT-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
-    plt.savefig('HLLD/dens-OT-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
->>>>>>> FETCH_HEAD
     
 
     plt.figure(3)
