@@ -194,7 +194,7 @@ contains
     rholul=priml(1)*priml(2)
     rhorur=primr(1)*primr(2)
 
-    sM = (srmur*rhorur-slmul*rholul-pTR+ptL)/( srmur*primr(1)-slmul*priml(1) )
+    sM = (srmur*rhorur-slmul*rholul-pTR+pTL)/( srmur*primr(1)-slmul*priml(1) )
     !
     srmsM=sr-sM
     slmsM=sl-sM
@@ -372,7 +372,7 @@ contains
       ff(8) = bzstst*sM-bx*wstst
       !
 #ifdef PASSIVES
-      ff(neqdyn+1:neq) = sM*priml(neqdyn+1:neq)*slmul/slmsM)
+      ff(neqdyn+1:neq) = sM*priml(neqdyn+1:neq)*slmul/slmsM
 #endif
     !
     return

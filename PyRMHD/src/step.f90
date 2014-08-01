@@ -27,7 +27,8 @@ subroutine step(dt)
            up(:,i,j,k)=u(:,i,j,k)-dtdx*(f(:,i,j,k)-f(:,i-1,j,k))    &
                                  -dtdy*(g(:,i,j,k)-g(:,i,j-1,k))    &
                                  -dtdz*(h(:,i,j,k)-h(:,i,j,k-1))
-#ifdef  SOURCE
+
+#ifdef SOURCE
            call source(i,j,k,primit(:,i,j,k),s)
            up(:,i,j,k)= up(:,i,j,k)+dt*s(:)
 #endif
@@ -37,4 +38,7 @@ subroutine step(dt)
   end do
   !
 end subroutine step
+
+
 !=======================================================================
+

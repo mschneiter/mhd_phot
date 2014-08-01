@@ -25,7 +25,7 @@ module parameters
   !
 #ifdef MPIP
   !   mpi array of processors
-  integer, parameter :: mpicol=4, mpirow=4,mpirowz=1
+  integer, parameter :: mpicol=2, mpirow=2,mpirowz=1
   integer, parameter :: np=mpicol*mpirow*mpirowz
 #endif
   !---------------------------------------------------------------------
@@ -39,6 +39,8 @@ module parameters
   real, parameter :: pi=acos(-1.)!3.1415926535
   real, parameter :: Msun=1.99E33, Rsun=6.955e10
   real, parameter :: Mjup=1.898E30
+  real, parameter :: Rjup=7.1492E9    !CM
+  real, parameter :: Rexo=1.38*Rjup
   real, parameter :: pc=3.0857E18, AU=1.496e13
   real, parameter :: clight=2.99E10
   !  some other constants

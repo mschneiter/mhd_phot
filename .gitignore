@@ -1,6 +1,8 @@
 .DS*
 .#*
-*.~
+*~
+*#
+*.swp
 *.pyc
 *.o
 *.a
@@ -12,3 +14,9 @@
 *.bak*
 
 PyRMHD/MHD_huacho
+
+*.f90#
+
+PyRMHD/src/.nfs00000000000d7893000024d7
+
+*.swp
