@@ -26,6 +26,8 @@ subroutine output(itprint)
   integer ::  i, j, k, unitout
   integer :: npoints, err
   integer :: ip
+  ! hack to plot div(B)
+  real :: divB(nx,ny,nz)
   !
   !-----------------------------------------------------------------
   !   output *.dat
@@ -142,7 +144,36 @@ subroutine output(itprint)
      end if
      
 #endif
-     !
+     
+    !   This is a hack to write div(B) to plot it easily
+    !  compute div(B)
+    do i=1,nx
+      do j=1,ny
+        do k=1,nz
+          divB(i,j,k) = (u(6,i+1,j,k)-u(6,i-1,j,k))/(2.*dx) + &
+                        (u(7,i,j+1,k)-u(7,i,j-1,k))/(2.*dy) + &
+                        (u(8,i,j,k+1)-u(8,i,j,k-1))/(2.*dz)
+        end do
+      end do
+    end do
+    ! take turns to write to disk
+     do ip=0, np-1
+       if(rank == ip) then
+
+          write(file1,'(a,i3.3,a,i3.3,a)')  trim(outputpath)//'BIN/divB-',rank,'.',itprint,'.bin'
+          unitout=10+rank
+
+          open(unit=unitout,file=file1,status='unknown',form='unformatted', &
+               convert='LITTLE_ENDIAN')
+
+          write (unitout) divB(:,:,:)
+          close(unitout)
+          
+       end if
+       call mpi_barrier(mpi_comm_world, err)
+    end do
+
+
      !
      !-----------------------------------------------------------------
      !   output *.vtk

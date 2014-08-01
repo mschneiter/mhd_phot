@@ -46,7 +46,8 @@ x_ax=np.linspace(0,1,nxtot)
 for nout in range(10,11):
     #  this is the ionization rate
     if (firstrun):
-        denT= coplot3d(3,nztot/2,0,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
+        denT = coplot3d(3,nztot/2,0,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)
+        divB = coplot3d(3,nztot/2,0,  1 ,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,nghost=0,path=path,base='divB-')
 #        vx  = coplot3d(3,nztot/2,1,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
 #        vy  = coplot3d(3,nztot/2,2,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
 #        vz  = coplot3d(3,nztot/2,3,neqs,nxtot,nytot,nztot,mpiX,mpiY,mpiZ,nout,path=path)/denT
@@ -66,9 +67,23 @@ for nout in range(10,11):
     plt.imshow(denT,cmap='jet',origin='lower',vmin=0.05,vmax=0.5)
     plt.colorbar()
     plt.show()
-    plt.savefig('HLLD/dens-OT-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
+    plt.savefig('HLLD/rho-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
+
+    plt.figure(2)
+    plt.clf()
+    plt.imshow(divB,cmap='jet',origin='lower',vmin=-5.,vmax=5.)
+    plt.colorbar()
+    plt.show()
+    plt.savefig('HLLD/divB-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')
     
 
+    plt.figure(3)
+    plt.clf()
+    plt.imshow(np.abs(divB),cmap='jet',origin='lower',vmin=1e-3,vmax=10.,norm=LogNorm() )
+    plt.colorbar()
+    plt.show()
+    plt.suptitle(r"$\vert \nabla \cdot B \vert$")
+    plt.savefig('HLLD/abs-divB-'+str(nout).zfill(3)+'.png',dpi=100,transparent=True,bbox_inches='tight')    
 #    plt.figure(2)
 #    plt.clf()
 #    plt.imshow(Ekin,cmap='jet',origin='lower' )
